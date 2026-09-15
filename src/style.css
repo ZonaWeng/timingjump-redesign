@@ -1,0 +1,129 @@
+:root {
+  font-family: Arial, "Noto Sans TC", sans-serif;
+  color: #1e1e1e;
+  background: #f7f5f2;
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 40px;
+  --space-5: 64px;
+
+  --text-body: 16px;
+  --text-small: 14px;
+  --text-nav: 16px;
+  --text-title-mobile: 36px;
+  --text-title-desktop: 56px;
+
+  --container-mobile: 16px;
+  --container-desktop: 72px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: clip;
+}
+
+/* 關於我們頁的 Header 與首屏無間隙銜接。 */
+body:has(.about-page) .site-header {
+  margin: 14px auto 0;
+}
+
+body:has(.about-page) {
+  background: #c3e7eb;
+}
+
+body:has(.venue-page) {
+  background: #fff;
+}
+
+body:has(.activity-page) {
+  background: #e5f4f6;
+}
+
+body:has(.question-page) {
+  background: #c3e7eb;
+}
+
+body:has(.question-page) .site-footer {
+  border-top: 0 !important;
+}
+
+body:has(.question-page) .site-header {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 100;
+}
+
+body:has(.contact-page) {
+  background: #e5f4f6;
+}
+
+body:has(.contact-page) .site-footer {
+  border-top: 0 !important;
+}
+
+body:has(.shop-home-page) .site-header {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 100;
+}
+
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.site {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.site-main {
+  width: 100%;
+}
+
+.hero,
+.page {
+  padding-block: 120px;
+}
+
+.eyebrow {
+  margin: 0 0 12px;
+  color: #4e858b;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+h1 {
+  max-width: 720px;
+  margin: 0;
+  font-size: clamp(2.25rem, 6vw, 5rem);
+  line-height: 1.15;
+}
+
+.hero-text {
+  max-width: 540px;
+  margin-top: 24px;
+  color: #5f5b56;
+  font-size: 1.125rem;
+  line-height: 1.8;
+}
+
+.shop-faq-page.question-page{position:relative;min-height:820px;overflow:hidden;padding:151px 0 0;background:#c3e7eb}.shop-faq-page .question-layout{display:grid;grid-template-columns:minmax(250px,1fr) minmax(0,570px) minmax(130px,1fr);gap:26px;width:min(calc(100% - 144px),1460px);min-height:731px;margin:auto}.shop-faq-page .question-intro h1{display:flex;align-items:center;gap:15px;margin:10px 0 0;font-size:clamp(1.3rem,2vw,2rem);font-weight:900}.shop-faq-page .faq-panel{grid-column:2;margin-top:112px}.shop-faq-page .faq-panel ol{margin:0;padding:0;list-style:none}.shop-faq-page .faq-panel li{border-bottom:2px solid #222}.shop-faq-page .faq-panel button{display:grid;grid-template-columns:1fr 34px;align-items:center;gap:20px;width:100%;min-height:61px;padding:0;border:0;background:transparent;color:#222;font-size:clamp(1.1rem,1.5vw,1.45rem);font-weight:700;text-align:left}.shop-faq-page .faq-panel i{position:relative;width:24px;height:24px}.shop-faq-page .faq-panel i:before,.shop-faq-page .faq-panel i:after{position:absolute;top:50%;left:50%;width:100%;height:2px;background:currentColor;content:"";transform:translate(-50%,-50%)}.shop-faq-page .faq-panel i:after{transform:translate(-50%,-50%) rotate(90deg)}.shop-faq-page .faq-panel button[aria-expanded=true] i:after{opacity:0}.shop-faq-page .faq-panel li>div{display:grid;grid-template-rows:0fr;opacity:0}.shop-faq-page .faq-panel li>div.open{grid-template-rows:1fr;opacity:1}.shop-faq-page .faq-panel li>div p{min-height:0;margin:0;padding:10px 25px 24px 0;overflow:hidden;font-size:clamp(1rem,1.2vw,1.12rem);line-height:1.75}.shop-faq-page .question-deco{position:absolute;pointer-events:none}.shop-faq-page .white-top{top:-520px;right:-310px;width:min(76vw,1180px);transform:rotate(-8deg)}.shop-faq-page .white-bottom{bottom:-500px;left:-270px;width:min(76vw,1080px);transform:rotate(8deg)}.shop-faq-page .gold-top{top:296px;left:13%;width:170px}.shop-faq-page .ring{bottom:28px;left:4.5%;width:180px}.shop-faq-page .gold-right{right:16%;bottom:105px;width:195px;transform:rotate(16deg)}
+.shop-faq-page .faq-panel button{min-height:61px!important;font-size:clamp(1.1rem,1.5vw,1.45rem)!important;font-weight:700!important;line-height:normal!important}.shop-faq-page .faq-panel i{width:24px!important;height:24px!important}.shop-faq-page .faq-panel i:before,.shop-faq-page .faq-panel i:after{height:2px!important}
+.shop-faq-page .faq-panel li>div:not(.open){display:none!important}.shop-faq-page .faq-panel li>div.open{display:block!important}.shop-faq-page .faq-panel li>div.open p{padding:10px 25px 24px 0!important}
+.shop-faq-page .faq-panel li>div.open p{font-size:clamp(1rem,1.2vw,1.12rem)!important;font-weight:500!important;line-height:1.75!important}
+.shop-faq-page.question-page{background:#f6edbf!important}

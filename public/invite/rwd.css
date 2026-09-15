@@ -1,0 +1,2627 @@
+/*
+ * Invite 共用響應式修正層。
+ *
+ * 640px 與 1920px 是既有參考稿尺寸。下方第一個基礎正規化區塊會排除
+ * 這兩個精確寬度；檔案後續仍包含針對 640px、1920px 與其他斷點的
+ * 元件修正，並依出現順序覆蓋前面的共用設定。
+ */
+
+@media (max-width: 639px), (min-width: 641px) and (max-width: 1919px) {
+    html,
+    body {
+        max-width: 100%;
+        overflow-x: clip;
+    }
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
+    img,
+    picture,
+    video,
+    canvas,
+    svg,
+    iframe {
+        max-width: 100%;
+    }
+
+    img,
+    video {
+        height: auto;
+    }
+
+    p,
+    li,
+    dd,
+    dt,
+    a,
+    button,
+    label,
+    input,
+    textarea,
+    select {
+        overflow-wrap: anywhere;
+    }
+
+    input,
+    textarea,
+    select,
+    button {
+        max-width: 100%;
+    }
+
+    table {
+        max-width: 100%;
+    }
+}
+
+/* Small phones: retain the existing <=640 design and only make its spacing
+   and type adapt between the requested 375px and 430px canvases. */
+@media (max-width: 639px) {
+    :root {
+        --rwd-gutter: clamp(18px, 5.33vw, 24px);
+    }
+
+    body {
+        font-size: clamp(14px, 3.73vw, 16px);
+    }
+
+    .wrap,
+    .section-container,
+    .nav-inner,
+    .footer-inner,
+    .booking-content,
+    .booking-form,
+    .contact-form,
+    .news-container,
+    .article-container,
+    main > section {
+        max-width: 100%;
+    }
+
+    .footer-inner,
+    .nav-inner,
+    .section-container,
+    .page-content {
+        padding-left: max(var(--rwd-gutter), env(safe-area-inset-left));
+        padding-right: max(var(--rwd-gutter), env(safe-area-inset-right));
+    }
+
+    .contact-name-fields,
+    .form-row,
+    .contact-form-row,
+    .booking-form-row,
+    .booking-choice-row,
+    .travel-form-row,
+    .transport-grid,
+    .venue-grid {
+        min-width: 0;
+    }
+
+    .history-viewport,
+    .tabs,
+    .time-picker-menu {
+        max-width: calc(100vw - (var(--rwd-gutter) * 2));
+    }
+}
+
+/* Comfortable viewing scale for laptops and non-reference desktop widths. */
+@media (min-width: 641px) and (max-width: 1919px) {
+    .nav {
+        top: clamp(16px, 1.45vw, 28px);
+        width: min(calc(100% - (var(--rwd-gutter) * 2)), 1800px);
+        min-height: clamp(78px, 6vw, 100px);
+        padding: clamp(10px, 1vw, 15px) clamp(20px, 2.1vw, 40px);
+    }
+
+    .nav-inner {
+        min-height: clamp(56px, 4vw, 68px);
+    }
+
+    .logo {
+        width: clamp(170px, 13vw, 250px);
+        margin-right: clamp(18px, 2.2vw, 42px);
+    }
+
+    .menu {
+        gap: clamp(14px, 1.45vw, 28px);
+    }
+
+    .menu a,
+    .actions a,
+    .actions button {
+        font-size: clamp(13px, 1.05vw, 18px);
+    }
+
+    .hero {
+        height: min(100svh, 900px);
+        min-height: clamp(620px, 48vw, 760px);
+    }
+
+    .hero-copy {
+        width: min(calc(100% - (var(--rwd-gutter) * 2)), 920px);
+    }
+
+    .hero-en {
+        font-size: clamp(30px, 2.55vw, 46px);
+        line-height: 1.35;
+    }
+
+    .hero-zh {
+        margin-top: clamp(24px, 2vw, 38px);
+        font-size: clamp(32px, 2.9vw, 52px);
+        line-height: 1.25;
+    }
+
+    .portal-title,
+    .hero-slogan {
+        font-size: clamp(36px, 4vw, 68px);
+    }
+
+    .heading,
+    .faq-heading,
+    .contact-heading,
+    .news-heading,
+    .booking-form-title,
+    .article-title,
+    .course-heading {
+        font-size: clamp(28px, 2.8vw, 52px);
+    }
+
+    .section-heading {
+        font-size: clamp(26px, 2.6vw, 48px);
+    }
+}
+
+/* Short laptop screens need a denser first view even when their width is
+   relatively large. */
+@media (min-width: 641px) and (max-width: 1919px) and (max-height: 900px) {
+    .hero {
+        height: 100svh;
+        min-height: 600px;
+    }
+
+    .hero-copy {
+        top: 52%;
+    }
+
+    .hero-en {
+        font-size: clamp(28px, 2.3vw, 42px);
+    }
+
+    .hero-zh {
+        margin-top: clamp(18px, 1.6vw, 28px);
+        font-size: clamp(30px, 2.65vw, 46px);
+    }
+
+    .scroll {
+        bottom: clamp(34px, 5vh, 58px);
+    }
+}
+
+/* Viewport-first sizing
+   A 1920px laptop commonly exposes only 1280–1536 CSS pixels after Windows
+   display scaling. Use the browser's available width and height, not the
+   panel's physical resolution, as the final sizing authority. */
+@media (min-width: 641px) and (max-width: 1919px) {
+    :root {
+        --viewport-gutter: clamp(24px, 3vw, 48px);
+    }
+
+    .nav {
+        top: clamp(14px, 1.25vw, 24px);
+        width: min(calc(100% - (var(--viewport-gutter) * 2)), 1650px);
+        min-height: clamp(70px, 5vw, 88px);
+        padding: clamp(8px, 0.75vw, 12px) clamp(18px, 1.8vw, 32px);
+    }
+
+    .nav-inner {
+        min-height: clamp(52px, 3.7vw, 64px);
+    }
+
+    .logo {
+        width: clamp(160px, 11.5vw, 220px);
+        margin-right: clamp(16px, 1.8vw, 34px);
+    }
+
+    .menu {
+        gap: clamp(12px, 1.25vw, 24px);
+    }
+
+    .menu a,
+    .actions a,
+    .actions button {
+        font-size: clamp(13px, 0.9vw, 17px);
+    }
+
+    .hero {
+        height: clamp(620px, 100svh, 900px);
+        min-height: 0;
+    }
+
+    .hero-copy {
+        top: 52%;
+        width: min(calc(100% - (var(--viewport-gutter) * 2)), 820px);
+    }
+
+    .hero-en {
+        font-size: clamp(28px, 2.25vw, 42px);
+        line-height: 1.32;
+    }
+
+    .hero-zh {
+        margin-top: clamp(18px, 1.55vw, 28px);
+        font-size: clamp(30px, 2.45vw, 46px);
+        line-height: 1.22;
+    }
+
+    .scroll {
+        bottom: clamp(30px, 5.5vh, 62px);
+    }
+}
+
+/* Typical 15–16 inch laptop viewport after OS scaling and browser chrome. */
+@media (min-width: 641px) and (max-width: 1600px),
+       (min-width: 641px) and (max-width: 1919px) and (max-height: 820px) {
+    .nav {
+        top: 14px;
+        min-height: 68px;
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+
+    .nav-inner {
+        min-height: 50px;
+    }
+
+    .logo {
+        width: clamp(155px, 11vw, 200px);
+    }
+
+    .hero {
+        height: max(580px, 100svh);
+        min-height: 580px;
+        max-height: 820px;
+    }
+
+    .hero-copy {
+        top: 53%;
+        width: min(calc(100% - 48px), 760px);
+    }
+
+    .hero-en {
+        font-size: clamp(27px, 2.15vw, 38px);
+    }
+
+    .hero-zh {
+        margin-top: clamp(16px, 1.4vw, 24px);
+        font-size: clamp(29px, 2.3vw, 42px);
+    }
+
+    .scroll {
+        bottom: 28px;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Requested 1440px page refinements
+   -------------------------------------------------------------------------- */
+
+/* Homepage and About banners always occupy at least the complete visible
+   browser canvas, so the following section never peeks into the first view. */
+.page > .hero {
+    height: 100svh;
+    min-height: 100svh;
+    max-height: none;
+}
+
+.about-hero {
+    min-height: 100svh;
+}
+
+@media (min-width: 641px) and (max-width: 1919px) {
+    /* Homepage venue guide remains two cards per row at 1440px. */
+    .page .venue-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: clamp(24px, 2.8vw, 40px);
+        row-gap: 0;
+    }
+
+    .page .venue-card,
+    .page .venue-card:nth-child(even) {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 0.95fr);
+        gap: clamp(18px, 2vw, 30px);
+        padding-right: 0;
+        padding-left: 0;
+    }
+
+    /* Venue booking step-two pages: every compound control may wrap instead
+       of forcing the booking panel wider than the viewport. */
+    .booking-panel:is(.is-form-first-page, .is-form-second-page, .is-form-third-page, .is-completion-step) {
+        width: min(calc(100% - (var(--rwd-gutter) * 2)), 1320px);
+        max-width: 100%;
+        margin-right: auto;
+        margin-left: auto;
+        padding-right: clamp(28px, 5vw, 90px);
+        padding-left: clamp(28px, 5vw, 90px);
+    }
+
+    .booking-panel:is(.is-form-first-page, .is-form-second-page, .is-form-third-page) .booking-form,
+    .booking-panel:is(.is-form-first-page, .is-form-second-page, .is-form-third-page) .booking-content {
+        width: 100%;
+        max-width: 1120px;
+        transform: none;
+    }
+
+    .booking-panel:is(.is-form-first-page, .is-form-second-page, .is-form-third-page) .booking-choice-row,
+    .booking-panel:is(.is-form-first-page, .is-form-second-page, .is-form-third-page) .travel-source-options,
+    .booking-panel:is(.is-form-first-page, .is-form-second-page, .is-form-third-page) .booking-form-heading,
+    .booking-panel:is(.is-form-first-page, .is-form-second-page, .is-form-third-page) .booking-form-actions {
+        flex-wrap: wrap;
+    }
+
+    .booking-panel:is(.is-form-first-page, .is-form-second-page, .is-form-third-page) .booking-choice {
+        flex: 1 1 min(180px, 100%);
+        min-width: min(140px, 100%);
+        white-space: normal;
+    }
+
+    .booking-panel:is(.is-form-first-page, .is-form-second-page, .is-form-third-page) .arrival-controls {
+        grid-template-columns: repeat(auto-fit, minmax(min(190px, 100%), 1fr));
+    }
+
+    .booking-panel:is(.is-form-first-page, .is-form-second-page, .is-form-third-page) .visitor-fields {
+        grid-template-columns: repeat(2, auto minmax(82px, 1fr));
+    }
+
+    .booking-panel:is(.is-form-first-page, .is-form-second-page, .is-form-third-page) .travel-course-fields,
+    .booking-panel:is(.is-form-first-page, .is-form-second-page, .is-form-third-page) .booking-bottom-row,
+    .booking-panel:is(.is-form-first-page, .is-form-second-page, .is-form-third-page) .contact-name-fields {
+        grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+    }
+
+    /* News: both the title rail and list content shrink within defined bounds. */
+    .news-page {
+        grid-template-columns: minmax(180px, 250px) minmax(0, 1fr);
+        gap: clamp(32px, 5vw, 72px);
+    }
+
+    .news-heading {
+        min-width: 0;
+        font-size: clamp(30px, 2.9vw, 42px);
+        white-space: normal;
+    }
+
+    .news-content {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .news-link {
+        grid-template-columns:
+            minmax(110px, 160px)
+            minmax(180px, 1fr)
+            minmax(110px, 170px);
+        gap: clamp(14px, 1.8vw, 26px);
+    }
+
+    .news-title {
+        min-width: 0;
+        font-size: clamp(19px, 1.6vw, 26px);
+    }
+
+    /* Contact address and its value share the same vertical centre line. */
+    .info-row {
+        align-items: center;
+    }
+
+    .info-row dt,
+    .info-row dd {
+        align-self: center;
+    }
+}
+
+@media (min-width: 641px) and (max-width: 899px) {
+    .page .venue-card,
+    .page .venue-card:nth-child(even) {
+        grid-template-columns: 1fr;
+    }
+
+    .booking-panel:is(.is-form-first-page, .is-form-second-page, .is-form-third-page) .booking-form-row,
+    .booking-panel:is(.is-form-first-page, .is-form-second-page, .is-form-third-page) .contact-form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .booking-panel:is(.is-form-first-page, .is-form-second-page, .is-form-third-page) .visitor-fields {
+        grid-template-columns: auto minmax(82px, 1fr);
+    }
+
+    .news-page {
+        grid-template-columns: 1fr;
+    }
+
+    .news-link {
+        grid-template-columns: minmax(100px, 140px) minmax(0, 1fr);
+    }
+
+    .news-date {
+        grid-column: 2;
+        text-align: left;
+    }
+}
+
+/* Tablet and compact desktop.  Fluid values land on the requested
+   768 / 1024 / 1280 / 1440 canvases without changing either source layout. */
+@media (min-width: 641px) and (max-width: 1919px) {
+    :root {
+        --rwd-gutter: clamp(28px, 4vw, 72px);
+        --rwd-section-gap: clamp(56px, 7vw, 112px);
+        --rwd-content: min(100% - (var(--rwd-gutter) * 2), 1650px);
+    }
+
+    body {
+        font-size: clamp(14px, calc(12.75px + 0.2vw), 17px);
+    }
+
+    h1 {
+        font-size: clamp(32px, 4.1vw, 72px);
+        line-height: 1.12;
+    }
+
+    h2,
+    .section-heading {
+        font-size: clamp(26px, 3vw, 52px);
+        line-height: 1.2;
+    }
+
+    h3 {
+        font-size: clamp(20px, 1.8vw, 32px);
+        line-height: 1.3;
+    }
+
+    .wrap,
+    .section-container,
+    .nav-inner,
+    .footer-inner,
+    .news-container,
+    .article-container,
+    .booking-content {
+        width: var(--rwd-content);
+        max-width: var(--rwd-content);
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .nav-inner,
+    .site-header,
+    .site-footer {
+        min-width: 0;
+    }
+
+    .nav-inner,
+    .footer-inner,
+    .footer-left,
+    .footer-right,
+    .footer-row,
+    .actions,
+    .menu {
+        gap: clamp(14px, 2vw, 36px);
+    }
+
+    .logo,
+    .footer-logo {
+        max-width: clamp(150px, 15vw, 260px);
+    }
+
+    .hero-image,
+    .hero-background-image,
+    .banner,
+    .map,
+    .history-viewport,
+    .history-track,
+    .sustainability-content,
+    .product-content,
+    .notice-content,
+    .contact-form,
+    .booking-form {
+        max-width: 100%;
+    }
+
+    .venue-grid,
+    .activities,
+    .news-list,
+    .transport-grid {
+        column-gap: clamp(20px, 3vw, 56px);
+        row-gap: clamp(28px, 4vw, 64px);
+    }
+
+    .contact-name-fields,
+    .form-row,
+    .contact-form-row,
+    .booking-form-row,
+    .booking-choice-row,
+    .travel-form-row,
+    .transport-grid,
+    .transport-panel,
+    .venue-card,
+    .news-item,
+    .image-frame {
+        min-width: 0;
+    }
+
+    .contact-label,
+    .form-label,
+    .booking-form-label {
+        min-width: clamp(88px, 10vw, 160px);
+    }
+
+    .history-viewport {
+        --timeline-item-width: clamp(300px, 38vw, 460px);
+    }
+
+    .tabs {
+        max-width: 100%;
+        overflow-x: auto;
+        scrollbar-width: thin;
+    }
+}
+
+/* The 768px canvas needs the navigation and two-column content to breathe,
+   but remains distinct from the approved 640px mobile composition. */
+@media (min-width: 641px) and (max-width: 900px) {
+    :root {
+        --rwd-gutter: clamp(24px, 4.7vw, 40px);
+    }
+
+    .nav-inner,
+    .menu,
+    .actions {
+        gap: 14px;
+    }
+
+    .menu a,
+    .actions a,
+    .actions button {
+        font-size: 13px;
+    }
+
+    .footer-inner,
+    .transport-grid,
+    .contact-name-fields {
+        column-gap: 28px;
+    }
+
+    .venue-grid,
+    .activities,
+    .news-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .booking-form-row,
+    .contact-form-row,
+    .travel-form-row {
+        max-width: 100%;
+    }
+}
+
+/* 1024–1440: preserve desktop structure while scaling its rhythm. */
+@media (min-width: 901px) and (max-width: 1535px) {
+    .venue-grid,
+    .activities,
+    .news-list {
+        grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+    }
+
+    .section,
+    section {
+        scroll-margin-top: clamp(72px, 8vw, 112px);
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Component-level fluid behaviour
+   -------------------------------------------------------------------------- */
+@media (min-width: 641px) and (max-width: 1919px) {
+    /* Full-bleed layers keep their colour/artwork edge-to-edge. */
+    .page,
+    .page-content,
+    .entry-page,
+    .hero,
+    .about-hero,
+    .hero-background,
+    .feature-venue,
+    .activities,
+    .transport,
+    .booking-section,
+    .notice-section,
+    .hours-section,
+    .news-page,
+    .article-page,
+    .history-section,
+    .venue-section,
+    .notes-section,
+    .sustainability-section,
+    .course-section {
+        width: 100%;
+        max-width: none;
+        background-size: cover;
+        background-position: center;
+    }
+
+    /* Headings and long-form copy scale continuously instead of jumping. */
+    .heading,
+    .faq-heading,
+    .contact-heading,
+    .news-heading,
+    .booking-form-title,
+    .article-title,
+    .course-heading {
+        font-size: clamp(30px, 3.5vw, 64px);
+        line-height: 1.18;
+    }
+
+    .hero-zh,
+    .portal-title,
+    .hero-slogan {
+        font-size: clamp(38px, 5.2vw, 92px);
+        line-height: 1.08;
+    }
+
+    .about-lead,
+    .faq-question,
+    .note-card-title,
+    .venue-card-title,
+    .course-card-title,
+    .booking-form-heading {
+        font-size: clamp(20px, 2vw, 36px);
+        line-height: 1.35;
+    }
+
+    .about-body,
+    .about-copy,
+    .faq-answer p,
+    .contact-info,
+    .info-row,
+    .news-text,
+    .news-title,
+    .article-copy p,
+    .article-copy ul,
+    .article-copy blockquote,
+    .history-description,
+    .note-card-text,
+    .venue-card-text,
+    .course-card-text,
+    .hours-copy,
+    .notice-copy,
+    .route-copy {
+        font-size: clamp(15px, 1.35vw, 28px);
+        line-height: 1.7;
+    }
+
+    /* Media keeps its intended crop while its box follows the layout. */
+    .activity-img,
+    .venue-img,
+    .feature-img,
+    .hero-card-image,
+    .venue-card-image,
+    .note-card-image,
+    .course-card-image,
+    .sustainability-image,
+    .article-main .hero-image,
+    .faq-photo,
+    .map img,
+    .venue-map-image {
+        display: block;
+        max-width: 100%;
+        object-fit: cover;
+    }
+
+    .activity-img,
+    .venue-img,
+    .feature-img,
+    .hero-card-image,
+    .venue-card-image,
+    .note-card-image,
+    .course-card-image {
+        width: 100%;
+    }
+
+    /* Shared spacing responds to the same viewport scale. */
+    .section-container,
+    .wrap,
+    .article-shell,
+    .news-content,
+    .faq-layout,
+    .contact-layout,
+    .booking-content {
+        width: var(--rwd-content);
+        max-width: var(--rwd-content);
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .section-heading,
+    .faq-heading,
+    .contact-heading,
+    .news-heading,
+    .course-heading,
+    .history-header {
+        margin-bottom: clamp(28px, 4vw, 72px);
+    }
+
+    .faq-layout,
+    .contact-layout,
+    .article-grid,
+    .about-grid,
+    .venue-layout,
+    .notes-grid,
+    .transport-grid {
+        gap: clamp(28px, 5vw, 88px);
+    }
+
+    .faq-photo {
+        width: clamp(240px, 29vw, 465px);
+    }
+
+    .faq-panel {
+        width: 100%;
+        max-width: 724px;
+    }
+
+    .faq-question {
+        grid-template-columns: minmax(0, 1fr) clamp(28px, 3vw, 44px);
+        column-gap: 16px;
+    }
+
+    .article-grid {
+        grid-template-columns: minmax(0, 1fr) clamp(130px, 12vw, 220px);
+    }
+
+    .article-copy {
+        padding-top: clamp(28px, 4vw, 54px);
+    }
+
+    .article-copy h2 {
+        font-size: clamp(24px, 2.4vw, 36px);
+    }
+
+    .news-link {
+        grid-template-columns: clamp(105px, 11vw, 160px) minmax(0, 1fr) clamp(110px, 12vw, 170px);
+        gap: clamp(14px, 2vw, 26px);
+    }
+
+    .contact-layout {
+        grid-template-columns: minmax(280px, 0.75fr) minmax(0, 1.25fr);
+    }
+
+    .contact-form,
+    .booking-form,
+    .field-shell,
+    .booking-field-shell {
+        width: 100%;
+    }
+
+    .form-row,
+    .booking-form-row {
+        grid-template-columns: clamp(100px, 10vw, 150px) minmax(0, 1fr);
+        gap: clamp(12px, 1.5vw, 22px);
+    }
+
+    .contact-form-row {
+        grid-template-columns: clamp(88px, 8vw, 120px) minmax(0, 1.2fr) clamp(72px, 6vw, 92px) minmax(0, 1fr);
+    }
+
+    .sustainability-card-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: clamp(14px, 2vw, 24px);
+    }
+
+    .course-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: clamp(24px, 4vw, 54px);
+    }
+
+    .course-card:nth-child(2) {
+        transform: translateY(clamp(20px, 3vw, 50px));
+    }
+
+    .footer-inner {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+}
+
+/* 768-ish: switch crowded desktop compositions before they collide. */
+@media (min-width: 641px) and (max-width: 899px) {
+    .faq-layout,
+    .contact-layout,
+    .article-grid,
+    .about-grid,
+    .venue-layout,
+    .notes-grid,
+    .transport-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .faq-layout,
+    .contact-layout {
+        min-height: 0;
+        padding-top: clamp(38px, 6vw, 56px);
+        padding-bottom: clamp(64px, 9vw, 96px);
+    }
+
+    .faq-photo {
+        width: min(52vw, 360px);
+        margin: 20px auto 0;
+    }
+
+    .faq-panel {
+        max-width: none;
+        margin-top: 0;
+    }
+
+    .article-meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        order: -1;
+        text-align: left;
+    }
+
+    .share-links {
+        position: static;
+        flex-direction: row;
+        margin-top: 0;
+    }
+
+    .contact-info-section {
+        transform: none;
+    }
+
+    .sustainability-card-grid,
+    .course-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .course-card:nth-child(2) {
+        transform: none;
+    }
+
+    .news-link {
+        grid-template-columns: 105px minmax(0, 1fr);
+    }
+
+    .news-type {
+        grid-column: 2;
+    }
+
+    .contact-form-row {
+        grid-template-columns: clamp(88px, 14vw, 120px) minmax(0, 1fr);
+    }
+
+    .contact-form-row > :nth-child(3) {
+        grid-column: 1;
+    }
+
+    .footer-inner {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 1024-ish: retain two columns, but reduce secondary-column minimums. */
+@media (min-width: 900px) and (max-width: 1151px) {
+    .faq-layout {
+        grid-template-columns: minmax(230px, 0.7fr) minmax(0, 1.3fr);
+    }
+
+    .contact-layout {
+        grid-template-columns: minmax(260px, 0.75fr) minmax(0, 1.25fr);
+    }
+
+    .venue-layout,
+    .notes-grid {
+        grid-template-columns: minmax(220px, 0.75fr) minmax(0, 1.25fr);
+    }
+
+    .sustainability-card-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* Phone canvases below the preserved 640px reference. */
+@media (max-width: 639px) {
+    .page,
+    .page-content,
+    .entry-page,
+    .hero,
+    .about-hero,
+    .hero-background,
+    .feature-venue,
+    .activities,
+    .transport,
+    .booking-section,
+    .notice-section,
+    .hours-section,
+    .news-page,
+    .article-page {
+        width: 100%;
+        background-size: cover;
+        background-position: center;
+    }
+
+    .heading,
+    .faq-heading,
+    .contact-heading,
+    .news-heading,
+    .booking-form-title,
+    .article-title,
+    .course-heading {
+        font-size: clamp(28px, 8.53vw, 36px);
+        line-height: 1.2;
+    }
+
+    .about-lead,
+    .faq-question,
+    .note-card-title,
+    .venue-card-title,
+    .course-card-title,
+    .booking-form-heading {
+        font-size: clamp(19px, 5.33vw, 23px);
+    }
+
+    .about-body,
+    .faq-answer p,
+    .news-text,
+    .news-title,
+    .article-copy p,
+    .article-copy ul,
+    .article-copy blockquote,
+    .history-description,
+    .note-card-text,
+    .venue-card-text,
+    .course-card-text,
+    .hours-copy,
+    .notice-copy,
+    .route-copy {
+        font-size: clamp(15px, 4.27vw, 18px);
+        line-height: 1.65;
+    }
+
+    .activity-img,
+    .venue-img,
+    .feature-img,
+    .hero-card-image,
+    .venue-card-image,
+    .note-card-image,
+    .course-card-image,
+    .sustainability-image,
+    .hero-image {
+        width: 100%;
+        max-width: 100%;
+        object-fit: cover;
+    }
+
+    .category-tabs,
+    .tabs,
+    .booking-choice-row,
+    .travel-source-options,
+    .arrival-controls,
+    .activity-tools,
+    .footer-row {
+        flex-wrap: wrap;
+    }
+}
+
+/* Final laptop type limits: keep display text comfortably below the oversized
+   decorative scale used by the 1920px reference composition. */
+@media (min-width: 641px) and (max-width: 1919px) {
+    .hero-en {
+        font-size: clamp(30px, 2.55vw, 46px);
+        line-height: 1.35;
+    }
+
+    .hero-zh {
+        margin-top: clamp(24px, 2vw, 38px);
+        font-size: clamp(32px, 2.9vw, 52px);
+        line-height: 1.25;
+    }
+
+    .portal-title,
+    .hero-slogan {
+        font-size: clamp(36px, 4vw, 68px);
+    }
+
+    .heading,
+    .faq-heading,
+    .contact-heading,
+    .news-heading,
+    .booking-form-title,
+    .article-title,
+    .course-heading {
+        font-size: clamp(28px, 2.8vw, 52px);
+    }
+
+    .section-heading {
+        font-size: clamp(26px, 2.6vw, 48px);
+    }
+}
+
+@media (min-width: 641px) and (max-width: 1919px) and (max-height: 900px) {
+    .hero-en {
+        font-size: clamp(28px, 2.3vw, 42px);
+    }
+
+    .hero-zh {
+        margin-top: clamp(18px, 1.6vw, 28px);
+        font-size: clamp(30px, 2.65vw, 46px);
+    }
+}
+
+/* Final 1440px enforcement, kept after the shared component rules. */
+@media (min-width: 1200px) and (max-width: 1535px) {
+    .page .venue-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .page .venue-card,
+    .page .venue-card:nth-child(even) {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 0.95fr);
+    }
+
+    .news-page {
+        grid-template-columns: minmax(180px, 250px) minmax(0, 1fr);
+        gap: clamp(32px, 5vw, 72px);
+    }
+
+    .news-heading {
+        min-width: 0;
+        font-size: clamp(30px, 2.9vw, 42px);
+        white-space: normal;
+    }
+
+    .news-content {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .news-link {
+        grid-template-columns:
+            minmax(110px, 160px)
+            minmax(180px, 1fr)
+            minmax(110px, 170px);
+    }
+
+    .info-row {
+        align-items: center;
+    }
+
+    .info-row dt,
+    .info-row dd {
+        align-self: center;
+    }
+}
+
+/* 1280×720 finishing adjustments. */
+@media (min-width: 1200px) and (max-width: 1365px) and (max-height: 900px) {
+    /* Centre the navigation action inside the 230 × 73px white cut-out. */
+    .page .transport-panel .route-btn,
+    .transport .transport-panel .route-btn {
+        right: auto !important;
+        bottom: 36.5px !important;
+        left: calc(100% - 115px) !important;
+        transform: translate(-50%, 50%) !important;
+    }
+
+    .page .transport-panel .route-btn:hover,
+    .transport .transport-panel .route-btn:hover {
+        transform: translate(-50%, calc(50% - 3px)) !important;
+    }
+
+    /* About slogan remains visible above the bottom of a 720px browser
+       viewport without cropping the banner artwork. */
+    .page-content > .about-hero,
+    .about-hero {
+        height: max(520px, calc(100svh - 132px)) !important;
+        min-height: max(520px, calc(100svh - 132px)) !important;
+    }
+}
+
+/* One owner for footer vertical spacing: the outer footer. Removing the
+   nested padding makes its visible top and bottom breathing room identical on
+   every page in laptop-height viewports. */
+@media (min-width: 641px) and (max-height: 900px) {
+    body > #app:has(.site-footer) > .site-footer,
+    .site-footer,
+    .footer {
+        padding-top: clamp(26px, 4.45vh, 32px) !important;
+        padding-bottom: clamp(26px, 4.45vh, 32px) !important;
+    }
+
+    .site-footer .footer-inner,
+    .footer .footer-inner {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+}
+
+/* Final timeline symmetry layer. */
+.history-viewport {
+    --timeline-axis-y: 360px;
+    --timeline-stem-start: 48px;
+}
+
+.history-item--bottom .history-stem {
+    height: calc(var(--timeline-axis-y) - var(--timeline-stem-start)) !important;
+}
+
+@media (min-width: 641px) and (max-width: 1439px) {
+    .history-viewport {
+        --timeline-stem-start: clamp(38px, 3.75vw, 48px);
+    }
+}
+
+@media (min-width: 641px) and (max-height: 900px) {
+    .history-viewport {
+        --timeline-stem-start: clamp(24px, 4vh, 36px);
+    }
+
+    .history-track,
+    .history-viewport.is-at-end .history-track {
+        height: max(
+            clamp(350px, 48vh, 432px),
+            calc((var(--timeline-axis-y) * 2) - var(--timeline-stem-start) + 20px)
+        ) !important;
+        min-height: calc((var(--timeline-axis-y) * 2) - var(--timeline-stem-start) + 20px) !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .history-viewport {
+        --timeline-axis-y: 300px;
+        --timeline-stem-start: 34px;
+    }
+}
+
+/* Mobile menu continuity at the 640px boundary. Keeping the header sticky and
+   leaving document scrolling enabled prevents opening the drawer from
+   restoring the page to scrollY=0. */
+@media (max-width: 640px) {
+    .site-header {
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 140 !important;
+    }
+
+    body.menu-open {
+        overflow: visible !important;
+    }
+}
+
+/* Symmetrical About timeline stems at every canvas size. Both the upper and
+   lower year lines derive from the same responsive axis and stem-start value. */
+.history-viewport {
+    --timeline-axis-y: 360px;
+    --timeline-stem-start: 48px;
+}
+
+.history-item--bottom .history-stem {
+    height: calc(var(--timeline-axis-y) - var(--timeline-stem-start)) !important;
+}
+
+@media (min-width: 641px) and (max-width: 1439px) {
+    .history-viewport {
+        --timeline-stem-start: clamp(38px, 3.75vw, 48px);
+    }
+}
+
+@media (min-width: 641px) and (max-height: 900px) {
+    .history-viewport {
+        --timeline-stem-start: clamp(24px, 4vh, 36px);
+    }
+
+    .history-track,
+    .history-viewport.is-at-end .history-track {
+        height: max(
+            clamp(350px, 48vh, 432px),
+            calc((var(--timeline-axis-y) * 2) - var(--timeline-stem-start) + 20px)
+        ) !important;
+        min-height: calc((var(--timeline-axis-y) * 2) - var(--timeline-stem-start) + 20px) !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .history-viewport {
+        --timeline-axis-y: 300px;
+        --timeline-stem-start: 34px;
+    }
+}
+
+/* ================================================================
+   1280px 專用修正（1200–1365px）
+   集中處理此寬度下的表單、時間軸與內容密度。
+================================================================ */
+@media (min-width: 1200px) and (max-width: 1365px) {
+    /* Homepage: keep the exhibition heading and intro comfortably inside the
+       blue silhouette instead of touching its sloped upper edge. */
+    .page .feature-venue .features {
+        padding-top: calc(var(--space) + 118px) !important;
+    }
+
+    /* About: the final timeline remains continuous and ends shortly after the
+       2023 marker. */
+    .history-viewport.is-at-end::after {
+        display: none !important;
+    }
+
+    .history-viewport.is-at-end .history-item:last-child::before {
+        display: none !important;
+    }
+
+    .history-viewport.is-at-end .history-item:last-child.history-item--top .history-stem {
+        top: 48px !important;
+        height: 154px !important;
+    }
+
+    /* News arrows scale with the viewport while retaining a usable target. */
+    .news-content > .pagination {
+        gap: clamp(10px, 1.15vw, 16px) !important;
+    }
+
+    .news-content > .pagination .page-btn {
+        width: clamp(44px, 4vw, 54px) !important;
+        height: clamp(44px, 4vw, 54px) !important;
+        border-width: clamp(1.5px, 0.15vw, 2px) !important;
+        font-size: clamp(25px, 2.35vw, 32px) !important;
+    }
+
+    .news-content > .pagination .page-btn svg {
+        width: clamp(18px, 1.7vw, 24px) !important;
+        height: clamp(18px, 1.7vw, 24px) !important;
+    }
+
+    /* Contact: values are easier to read and share the same vertical axis as
+       their corresponding labels. */
+    .contact-info .info-row {
+        grid-template-columns: 132px minmax(0, 1fr) !important;
+        align-items: start !important;
+        column-gap: 20px !important;
+    }
+
+    .contact-info .info-row dt,
+    .contact-info .info-row dd {
+        align-self: start !important;
+    }
+
+    .contact-info .info-row dd,
+    .contact-info .phone-list {
+        font-size: clamp(21px, 1.75vw, 23px) !important;
+        line-height: 1.55 !important;
+    }
+
+    /* Booking step two, pages 1–3: use normal four-corner rounding and allow
+       every form grid to shrink without pushing the panel off canvas. */
+    .booking-panel:is(.is-form-first-page, .is-form-second-page, .is-form-third-page) {
+        width: min(calc(100% - 48px), 1180px) !important;
+        padding-inline: clamp(42px, 5vw, 64px) !important;
+    }
+
+    .booking-panel:is(.is-form-first-page, .is-form-second-page, .is-form-third-page) .booking-form {
+        width: min(100%, 1040px) !important;
+        max-width: 100% !important;
+        margin-inline: auto !important;
+    }
+
+    .booking-panel:is(.is-form-first-page, .is-form-second-page, .is-form-third-page) .booking-form-row,
+    .booking-panel:is(.is-form-first-page, .is-form-second-page, .is-form-third-page) .contact-form-row,
+    .booking-panel:is(.is-form-first-page, .is-form-second-page, .is-form-third-page) .travel-source-row,
+    .booking-panel:is(.is-form-first-page, .is-form-second-page, .is-form-third-page) .travel-course-row {
+        grid-template-columns: 132px minmax(0, 1fr) !important;
+        min-width: 0 !important;
+    }
+
+    .booking-panel:is(.is-form-first-page, .is-form-second-page, .is-form-third-page) .booking-field-shell {
+        width: 100% !important;
+        min-width: 0 !important;
+        border-radius: 18px !important;
+    }
+
+    .booking-panel:is(.is-form-first-page, .is-form-second-page, .is-form-third-page) .booking-field-shell input,
+    .booking-panel:is(.is-form-first-page, .is-form-second-page, .is-form-third-page) .booking-field-shell select {
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    .booking-panel:is(.is-form-first-page, .is-form-second-page, .is-form-third-page) .booking-choice-row,
+    .booking-panel:is(.is-form-first-page, .is-form-second-page, .is-form-third-page) .travel-source-options {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        min-width: 0 !important;
+        border-radius: 18px !important;
+    }
+
+    .booking-panel:is(.is-form-first-page, .is-form-second-page, .is-form-third-page) .booking-choice {
+        flex: 1 1 150px !important;
+        min-width: 0 !important;
+    }
+
+    .booking-panel:is(.is-form-first-page, .is-form-second-page, .is-form-third-page) .visitor-fields,
+    .booking-panel:is(.is-form-first-page, .is-form-second-page, .is-form-third-page) .arrival-controls,
+    .booking-panel:is(.is-form-first-page, .is-form-second-page, .is-form-third-page) .travel-course-fields,
+    .booking-panel:is(.is-form-first-page, .is-form-second-page, .is-form-third-page) .booking-bottom-row,
+    .booking-panel:is(.is-form-first-page, .is-form-second-page, .is-form-third-page) .contact-name-fields {
+        width: 100% !important;
+        min-width: 0 !important;
+        grid-template-columns: repeat(auto-fit, minmax(min(190px, 100%), 1fr)) !important;
+    }
+}
+
+/* News pagination uses one genuinely fluid scale from the 640 reference to
+   the 1920 desktop canvas. The 1280 result is about 44px rather than 51px, so
+   the change remains visually apparent. */
+@media (min-width: 641px) and (max-width: 1920px) {
+    .news-content > .pagination .page-btn {
+        width: clamp(40px, 3.45vw, 54px) !important;
+        height: clamp(40px, 3.45vw, 54px) !important;
+        font-size: clamp(23px, 2vw, 32px) !important;
+    }
+
+    .news-content > .pagination .page-btn svg {
+        width: clamp(16px, 1.45vw, 24px) !important;
+        height: clamp(16px, 1.45vw, 24px) !important;
+    }
+
+    .news-content > .pagination {
+        gap: clamp(9px, 1vw, 16px) !important;
+    }
+}
+
+/* Below 1440px the last timeline slide used to keep the full alternating
+   desktop track height, leaving hundreds of pixels of empty space before the
+   venue guide. Collapse only the final 2023 state after its copy. */
+@media (min-width: 641px) and (max-width: 1439px) {
+    .history-viewport,
+    .history-viewport.is-at-end {
+        --timeline-item-width: clamp(300px, 32vw, 460px) !important;
+        --timeline-axis-y: clamp(260px, 23.44vw, 300px);
+        height: auto !important;
+        min-height: 0;
+    }
+
+    .history-track,
+    .history-viewport.is-at-end .history-track {
+        height: clamp(500px, 43.75vw, 560px) !important;
+        min-height: 500px !important;
+    }
+
+    .history-viewport::after,
+    .history-viewport.is-at-end::after {
+        top: var(--timeline-axis-y) !important;
+        right: 0 !important;
+        left: 0 !important;
+        display: block !important;
+        width: auto !important;
+    }
+
+    .history-item::before,
+    .history-viewport.is-at-end .history-item:last-child::before {
+        top: calc(var(--timeline-axis-y) - 8px) !important;
+        display: block !important;
+    }
+
+    .history-item--top .history-stem,
+    .history-viewport.is-at-end .history-item:last-child.history-item--top .history-stem {
+        top: clamp(38px, 3.75vw, 48px) !important;
+        height: calc(var(--timeline-axis-y) - clamp(38px, 3.75vw, 48px)) !important;
+    }
+
+    .history-item--top .history-content {
+        top: clamp(32px, 3.28vw, 42px) !important;
+    }
+
+    .history-item--bottom .history-stem {
+        top: var(--timeline-axis-y) !important;
+        height: clamp(105px, 9.38vw, 120px) !important;
+    }
+
+    .history-item--bottom .history-content {
+        top: calc(var(--timeline-axis-y) + clamp(44px, 3.9vw, 50px)) !important;
+    }
+
+    .history-section:has(.history-viewport.is-at-end) {
+        padding-bottom: clamp(42px, 4.22vw, 54px) !important;
+    }
+}
+
+/* Large desktop screens need the same top clearance as compact desktop
+   layouts, otherwise the exhibition heading can rise above the blue shape. */
+@media (min-width: 1366px) {
+    .page .feature-venue .features {
+        padding-top: calc(var(--space) + clamp(118px, 7vw, 160px)) !important;
+    }
+
+    /* Homepage: leave a clearer break between the three feature images and
+       the following venue guide. */
+    .page .feature-venue .venue {
+        padding-top: calc(var(--space) + clamp(80px, 7.5vw, 190px)) !important;
+    }
+}
+
+/* ================================================================
+   Laptop-height adaptation
+   Browser chrome and the OS taskbar often leave only 700–850 CSS pixels of
+   vertical space on a 15.6-inch notebook. Compact the complete timeline as a
+   unit so its controls, top years and bottom years remain visible together.
+================================================================ */
+@media (min-width: 641px) and (max-height: 900px) {
+    .history-section {
+        padding-top: clamp(32px, 5vh, 48px) !important;
+        padding-bottom: clamp(32px, 5vh, 48px) !important;
+    }
+
+    .history-header {
+        margin-bottom: clamp(8px, 1.5vh, 14px) !important;
+    }
+
+    .history-viewport,
+    .history-viewport.is-at-end {
+        --timeline-axis-y: clamp(190px, 28vh, 252px) !important;
+        height: auto !important;
+    }
+
+    .history-track,
+    .history-viewport.is-at-end .history-track {
+        height: clamp(350px, 48vh, 432px) !important;
+        min-height: 350px !important;
+    }
+
+    .history-viewport::after,
+    .history-viewport.is-at-end::after {
+        top: var(--timeline-axis-y) !important;
+    }
+
+    .history-item::before,
+    .history-viewport.is-at-end .history-item:last-child::before {
+        top: calc(var(--timeline-axis-y) - 8px) !important;
+    }
+
+    .history-item--top .history-stem,
+    .history-viewport.is-at-end .history-item:last-child.history-item--top .history-stem {
+        top: clamp(24px, 4vh, 36px) !important;
+        height: calc(var(--timeline-axis-y) - clamp(24px, 4vh, 36px)) !important;
+    }
+
+    .history-item--top .history-content {
+        top: clamp(18px, 3vh, 28px) !important;
+    }
+
+    .history-item--bottom .history-stem {
+        top: var(--timeline-axis-y) !important;
+        height: clamp(72px, 10vh, 90px) !important;
+    }
+
+    .history-item--bottom .history-content {
+        top: calc(var(--timeline-axis-y) + clamp(30px, 5vh, 42px)) !important;
+    }
+
+    .history-year {
+        font-size: clamp(42px, 7vh, 62px) !important;
+        line-height: 1 !important;
+    }
+
+    .history-description {
+        font-size: clamp(16px, 2.35vh, 20px) !important;
+        line-height: 1.45 !important;
+    }
+
+    .history-control {
+        width: clamp(40px, 6vh, 48px) !important;
+        height: clamp(40px, 6vh, 48px) !important;
+    }
+}
+
+/* ================================================================
+   Site-wide width × height responsive system
+   Width controls column changes; viewport height controls vertical rhythm.
+   Long content remains scrollable instead of being clipped or scaled down to
+   unreadable sizes.
+================================================================ */
+@media (min-width: 641px) and (max-height: 900px) {
+    :root {
+        --space: clamp(42px, 7vh, 68px) !important;
+        --height-section-space: clamp(36px, 6vh, 64px);
+        --height-heading-gap: clamp(20px, 3.5vh, 36px);
+        --height-panel-space: clamp(24px, 4vh, 42px);
+        --height-media-max: clamp(240px, 48vh, 420px);
+    }
+
+    /* Shared navigation consumes less of the usable laptop viewport. */
+    .site-header {
+        padding-top: clamp(10px, 2vh, 18px) !important;
+        padding-bottom: clamp(8px, 1.5vh, 14px) !important;
+    }
+
+    .site-header .nav,
+    .page > .nav {
+        min-height: clamp(70px, 10vh, 88px) !important;
+    }
+
+    .site-header .nav-inner,
+    .page > .nav .nav-inner {
+        min-height: clamp(52px, 7.5vh, 66px) !important;
+    }
+
+    /* All major page sections use height-aware rhythm. */
+    .features,
+    .venue,
+    .activities,
+    .transport,
+    .history-section,
+    .venue-section,
+    .notes-section,
+    .sustainability-section,
+    .course-section,
+    .hours-section,
+    .notice-section,
+    .booking-section {
+        padding-top: var(--height-section-space) !important;
+        padding-bottom: var(--height-section-space) !important;
+    }
+
+    .heading,
+    .section-heading,
+    .faq-heading,
+    .contact-heading,
+    .news-heading,
+    .booking-form-title,
+    .article-title,
+    .course-heading {
+        margin-bottom: var(--height-heading-gap) !important;
+    }
+
+    /* Homepage and About first screens scale to the actual browser viewport,
+       not the monitor's advertised 1080px resolution. */
+    .page > .hero,
+    .hero,
+    .page-content > .about-hero,
+    .about-hero {
+        height: auto !important;
+        min-height: max(540px, calc(100svh - clamp(78px, 11vh, 104px))) !important;
+        max-height: none !important;
+        padding-top: clamp(72px, 11vh, 104px) !important;
+        padding-bottom: clamp(42px, 7vh, 72px) !important;
+    }
+
+    .hero-copy,
+    .about-hero .hero-slogan {
+        margin-top: clamp(18px, 3vh, 30px) !important;
+    }
+
+    /* Homepage compositions: remove desktop-only empty vertical reserves and
+       let their content determine height. */
+    .feature-venue {
+        min-height: clamp(1500px, 225vh, 1900px) !important;
+    }
+
+    .collage {
+        min-height: clamp(480px, 72vh, 650px) !important;
+    }
+
+    .page .venue-card,
+    .activity-card,
+    .transport-panel,
+    .map {
+        min-height: 0 !important;
+    }
+
+    .activity-img,
+    .venue-img,
+    .venue-card-image,
+    .course-card-image,
+    .sustainability-image,
+    .note-card-image {
+        max-height: var(--height-media-max) !important;
+        object-fit: cover;
+    }
+
+    /* News, FAQ, Contact and article pages should flow with their content. */
+    .news-page,
+    .faq-layout,
+    .contact-layout,
+    .article-page,
+    .article-grid,
+    .page-content {
+        min-height: 0 !important;
+    }
+
+    .news-page,
+    .faq-layout,
+    .contact-layout,
+    .article-page {
+        padding-top: var(--height-section-space) !important;
+        padding-bottom: var(--height-section-space) !important;
+    }
+
+    .news-content > .pagination,
+    .notes-controls,
+    .history-controls {
+        margin-top: 0 !important;
+        margin-bottom: clamp(14px, 2.5vh, 24px) !important;
+    }
+
+    .faq-panel,
+    .contact-form {
+        margin-top: clamp(64px, 10vh, 90px) !important;
+    }
+
+    .contact-info-section {
+        transform: none !important;
+    }
+
+    .contact-info .info-row {
+        padding-top: clamp(14px, 2.5vh, 22px) !important;
+        padding-bottom: clamp(14px, 2.5vh, 22px) !important;
+    }
+
+    .field-shell,
+    .booking-field-shell {
+        min-height: clamp(44px, 7vh, 52px) !important;
+    }
+
+    .message-shell,
+    .booking-note-shell {
+        min-height: clamp(110px, 19vh, 150px) !important;
+    }
+
+    /* Venue hours, notices and booking forms reduce spacing, but retain
+       natural document height when their content cannot fit in one screen. */
+    .hours-list,
+    .booking-content,
+    .booking-form,
+    .notice-content {
+        gap: var(--height-panel-space) !important;
+    }
+
+    .hours-row,
+    .hours-card,
+    .booking-panel,
+    .notice-panel {
+        min-height: 0 !important;
+    }
+
+    .booking-panel {
+        padding-top: clamp(52px, 9vh, 82px) !important;
+        padding-bottom: clamp(52px, 9vh, 82px) !important;
+    }
+
+    .booking-form-row,
+    .contact-form-row,
+    .form-row {
+        row-gap: clamp(10px, 2vh, 18px) !important;
+    }
+
+    /* Footer remains in normal flow and never reserves a monitor-sized blank
+       region above or below itself. */
+    .site-footer,
+    .footer {
+        min-height: 0 !important;
+        margin-top: 0 !important;
+    }
+
+    .footer-inner {
+        padding-top: clamp(24px, 4vh, 42px) !important;
+        padding-bottom: clamp(20px, 3.5vh, 36px) !important;
+    }
+}
+
+/* Extra-compact browser windows, common after browser chrome and Windows task
+   bars consume a 1366×768 laptop display. */
+@media (min-width: 641px) and (max-height: 740px) {
+    :root {
+        --space: clamp(34px, 6vh, 48px) !important;
+        --height-section-space: clamp(30px, 5vh, 42px);
+        --height-heading-gap: clamp(16px, 3vh, 24px);
+        --height-panel-space: clamp(18px, 3vh, 28px);
+    }
+
+    .page > .hero,
+    .hero,
+    .page-content > .about-hero,
+    .about-hero {
+        min-height: max(500px, calc(100svh - 76px)) !important;
+        padding-top: clamp(58px, 9vh, 72px) !important;
+        padding-bottom: clamp(32px, 5vh, 44px) !important;
+    }
+
+    .feature-venue {
+        min-height: clamp(1320px, 215vh, 1600px) !important;
+    }
+
+    .collage {
+        min-height: clamp(420px, 66vh, 500px) !important;
+    }
+
+    .booking-panel {
+        padding-top: clamp(42px, 7vh, 56px) !important;
+        padding-bottom: clamp(42px, 7vh, 56px) !important;
+    }
+}
+
+/* ================================================================
+   1024px layout corrections (900–1151px)
+   Keep these after the general responsive rules so the 1280px and
+   larger compositions remain untouched.
+================================================================ */
+@media (min-width: 900px) and (max-width: 1151px) {
+    /* Shared navigation: retain the full desktop menu without allowing the
+       login or shop controls to be compressed outside the rounded bar. */
+    .site-header {
+        padding-inline: 18px !important;
+    }
+
+    .site-header .nav,
+    .page > .nav {
+        width: calc(100% - 36px) !important;
+        min-height: 78px !important;
+        padding: 8px 14px !important;
+    }
+
+    .site-header .nav {
+        width: 100% !important;
+    }
+
+    .site-header .nav-inner,
+    .page > .nav .nav-inner {
+        width: 100% !important;
+        min-height: 60px !important;
+        padding-inline: 8px !important;
+        gap: 10px !important;
+    }
+
+    .site-header .logo,
+    .page > .nav .logo {
+        width: clamp(136px, 14.5vw, 158px) !important;
+        margin-right: 8px !important;
+        flex: 0 0 auto !important;
+    }
+
+    .site-header .menu,
+    .page > .nav .menu {
+        min-width: 0 !important;
+        gap: clamp(7px, 1vw, 11px) !important;
+    }
+
+    .site-header .menu a,
+    .page > .nav .menu a {
+        font-size: 18px !important;
+        white-space: nowrap !important;
+    }
+
+    .site-header .actions,
+    .page > .nav .actions {
+        flex: 0 0 auto !important;
+        gap: 8px !important;
+        white-space: nowrap !important;
+    }
+
+    .site-header .login,
+    .page > .nav .login {
+        gap: 5px !important;
+        font-size: 16px !important;
+        white-space: nowrap !important;
+    }
+
+    .site-header .login svg,
+    .page > .nav .login svg {
+        width: 19px !important;
+        height: 19px !important;
+        min-width: 19px !important;
+        flex: 0 0 19px !important;
+    }
+
+    .site-header .shop,
+    .page > .nav .shop {
+        width: 102px !important;
+        min-width: 102px !important;
+        min-height: 52px !important;
+        padding: 9px 11px !important;
+        gap: 5px !important;
+        font-size: 16px !important;
+        line-height: 1.15 !important;
+        white-space: nowrap !important;
+    }
+
+    .site-header .shop svg,
+    .page > .nav .shop svg {
+        width: 17px !important;
+        height: 17px !important;
+        min-width: 17px !important;
+    }
+
+    /* Homepage exhibition copy begins inside the blue irregular background. */
+    .page .feature-venue .features {
+        padding-top: calc(var(--space) + 145px) !important;
+    }
+
+    /* Homepage and venue share this transport component. */
+    .page .route-copy,
+    .transport .route-copy {
+        padding: 26px 28px 68px !important;
+        font-size: clamp(18px, 1.9vw, 20px) !important;
+        line-height: 1.65 !important;
+    }
+
+    .page .route-copy::after,
+    .transport .route-copy::after {
+        width: 150px !important;
+        height: 50px !important;
+        border-radius: 20px 0 0 0 !important;
+    }
+
+    .page .route-btn,
+    .transport .route-btn {
+        right: 12px !important;
+        bottom: 25px !important;
+    }
+
+    /* About: map first, selected venue card second. */
+    .venue-layout {
+        grid-template-columns: 1fr !important;
+        align-items: start !important;
+        gap: 34px !important;
+    }
+
+    .venue-map {
+        order: 1;
+        width: min(100%, 820px);
+        margin-inline: auto;
+    }
+
+    .venue-card {
+        order: 2;
+        width: min(100%, 720px) !important;
+        max-width: 720px !important;
+        margin-inline: auto;
+        text-align: center;
+    }
+
+    .venue-card-text {
+        text-align: center !important;
+    }
+
+    .notes-main,
+    .note-card-content {
+        text-align: left !important;
+    }
+
+    .notes-main {
+        width: min(100%, 720px) !important;
+        margin-inline: auto !important;
+    }
+
+    .notes-grid {
+        grid-template-columns: 1fr !important;
+        gap: 34px !important;
+    }
+
+    .note-card-text {
+        text-align: left !important;
+    }
+
+    .note-card-heading {
+        justify-content: space-between !important;
+        flex-wrap: wrap;
+    }
+
+    /* Venue hours: keep the location name intact and place its lighting note
+       after the two time rows instead of squeezing it into the heading. */
+    .hours-column {
+        display: flex !important;
+        min-width: 0;
+        flex-direction: column;
+    }
+
+    .hours-column-title {
+        display: contents !important;
+    }
+
+    .hours-column-title > span {
+        order: 1;
+        margin-bottom: 12px;
+        font-size: clamp(20px, 2.2vw, 24px);
+        font-weight: 800;
+        white-space: nowrap !important;
+    }
+
+    .hours-column .hours-copy {
+        order: 2;
+    }
+
+    .hours-column .hours-copy + .hours-copy {
+        order: 3;
+    }
+
+    .hours-column .hours-note {
+        order: 4;
+        display: block;
+        margin-top: 8px;
+        font-size: clamp(15px, 1.55vw, 17px);
+        line-height: 1.5;
+    }
+
+    /* News: the list sits directly below and centred under its page title. */
+    .news-page {
+        width: min(calc(100% - 64px), 900px) !important;
+        grid-template-columns: 1fr !important;
+        gap: 30px !important;
+    }
+
+    .news-heading {
+        justify-self: start !important;
+        margin: 0 !important;
+        text-align: left !important;
+    }
+
+    .news-content {
+        width: min(100%, 820px) !important;
+        min-width: 0;
+        justify-self: center !important;
+    }
+
+    /* Contact: fluid 18px-minimum labels and matching top edges. */
+    .contact-layout {
+        grid-template-columns: minmax(300px, 0.82fr) minmax(0, 1.18fr) !important;
+        align-items: start !important;
+        gap: 38px !important;
+    }
+
+    .contact-info-section {
+        align-self: start !important;
+        transform: none !important;
+    }
+
+    .contact-form {
+        align-self: start !important;
+        margin-top: clamp(74px, 7.7vw, 88px) !important;
+    }
+
+    .contact-info-section .info-row dt,
+    .contact-info-section .phone-labels {
+        font-size: clamp(18px, 2vw, 21px) !important;
+        line-height: 1.45;
+    }
+
+    /* Keep the main heading scale consistent across every 1024px page. */
+    .heading,
+    .section-heading,
+    .faq-heading,
+    .contact-heading,
+    .news-heading,
+    .booking-form-title,
+    .article-title,
+    .course-heading {
+        font-size: clamp(28px, 3.7vw, 38px) !important;
+    }
+}
+
+/* Once the final 2023 item is reached, all tablet and smaller desktop widths
+   stop the horizontal rule just beyond its final marker. */
+@media (max-width: 1199px) {
+    .history-viewport.is-at-end::after {
+        right: auto !important;
+        left: 0 !important;
+        width: clamp(92px, 11vw, 126px) !important;
+    }
+
+    /* 2023 is the final top item. Its stem ends shortly after the copy instead
+       of continuing through the large empty area to the baseline. */
+    .history-item:last-child.history-item--top .history-stem {
+        height: clamp(155px, 20vw, 205px) !important;
+    }
+}
+
+@media (max-width: 640px) {
+    /* On the touch-scrolling timeline the line belongs to the track rather
+       than the viewport; end it shortly after the final 2023 marker. */
+    .history-track::before {
+        right: auto !important;
+        width: calc(100% - var(--timeline-item-width) + 72px) !important;
+    }
+}
+
+@media (min-width: 900px) and (max-width: 1151px) {
+    .history-item:last-child.history-item--top .history-stem {
+        height: 152px !important;
+    }
+}
+
+/* At the final 2023 slide, stop the horizontal timeline shortly after its dot
+   instead of drawing it across the empty remainder of the viewport. */
+@media (min-width: 1200px) and (max-width: 1365px) {
+    .history-viewport.is-at-end::after {
+        right: auto;
+        left: 0;
+        width: 142px;
+    }
+}
+
+/* Homepage transport/footer boundary at every viewport size. The route button
+   and map must remain inside the transport section before footer paint begins. */
+.page .transport {
+    position: relative;
+    z-index: 2;
+    display: flow-root;
+    min-height: max-content;
+    padding-bottom: clamp(96px, 9vw, 172px);
+    overflow: visible;
+    background-color: #ffffff;
+}
+
+.page .transport-grid {
+    position: relative;
+    z-index: 2;
+    align-items: start;
+}
+
+.page .transport-panel,
+.page .map {
+    height: auto;
+    min-height: 440px;
+}
+
+.page > .site-footer {
+    position: relative;
+    z-index: 1;
+    clear: both;
+    margin-top: 0;
+}
+
+@media (max-width: 640px) {
+    .page .transport {
+        padding-bottom: 96px;
+    }
+
+    .page .transport-panel,
+    .page .map {
+        min-height: 0;
+    }
+}
+
+/* Unified nav geometry for Homepage and every internal page from 1920 down.
+   Homepage owns a fixed nav; internal pages reach the same visual rectangle
+   through equal header padding and an equal maximum nav width. */
+@media (min-width: 641px) and (max-width: 1920px) {
+    .site-header {
+        padding-top: clamp(14px, 1.25vw, 24px);
+        padding-right: clamp(24px, 3vw, 48px);
+        padding-bottom: 0;
+        padding-left: clamp(24px, 3vw, 48px);
+    }
+
+    .site-header .nav {
+        top: 0;
+        width: min(100%, 1650px);
+        min-height: clamp(70px, 5vw, 88px);
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .page > .nav {
+        top: clamp(14px, 1.25vw, 24px);
+        width: min(calc(100% - (clamp(24px, 3vw, 48px) * 2)), 1650px);
+        min-height: clamp(70px, 5vw, 88px);
+    }
+
+    .site-header .nav-inner,
+    .page > .nav .nav-inner {
+        min-height: clamp(52px, 3.7vw, 64px);
+    }
+
+    .site-header .logo,
+    .page > .nav .logo {
+        width: clamp(160px, 11.5vw, 220px);
+        margin-right: clamp(16px, 1.8vw, 34px);
+    }
+
+    .site-header .menu,
+    .page > .nav .menu {
+        gap: clamp(12px, 1.25vw, 24px);
+    }
+
+    .site-header .actions,
+    .page > .nav .actions {
+        gap: clamp(14px, 1.4vw, 24px);
+    }
+
+    .site-header .login,
+    .site-header .shop,
+    .page > .nav .login,
+    .page > .nav .shop {
+        font-size: clamp(18px, 1.1458vw, 22px);
+        white-space: nowrap;
+    }
+
+    .site-header .shop,
+    .page > .nav .shop {
+        min-width: clamp(128px, 8vw, 154px);
+        justify-content: center;
+    }
+}
+
+/* Final news container width must come after the full-bleed shared layers. */
+@media (min-width: 641px) and (max-width: 1919px) {
+    .news-page {
+        width: min(calc(100% - (var(--rwd-gutter) * 2) - 32px), 1500px);
+        max-width: 1500px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+}
+
+/* News heading: 42px at 1920px, fluid below it, never smaller than 20px. */
+@media (max-width: 1920px) {
+    .menu a {
+        font-size: clamp(18px, 1.1458vw, 22px);
+    }
+
+    .news-heading {
+        font-size: clamp(20px, 2.1875vw, 42px);
+    }
+
+    .news-type,
+    .news-title,
+    .category-tab {
+        font-size: clamp(18px, 1.3542vw, 26px);
+    }
+}
+
+/* Footer reaches the bottom edge without exposing the body background. */
+@media (max-width: 1920px) {
+    html {
+        background: var(--footer-bg, #e7e1dc);
+    }
+
+    body,
+    body > #app:has(.site-footer) {
+        min-height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    body > #app:has(.site-footer) {
+        display: flex;
+        min-height: 100svh;
+        flex-direction: column;
+    }
+
+    body > #app:has(.site-footer) > .site-footer {
+        width: 100%;
+        margin-top: auto;
+        margin-bottom: 0;
+        padding-bottom: max(35px, env(safe-area-inset-bottom));
+        flex: none;
+        background-color: var(--footer-bg, #e7e1dc);
+        box-shadow: 0 32px 0 var(--footer-bg, #e7e1dc);
+    }
+}
+
+/* 1920-and-down news artwork scales proportionally with the viewport. */
+@media (max-width: 1920px) {
+    .falling-stage {
+        height: min(16.4063vw, 315px);
+    }
+
+    .falling-object:nth-child(1) {
+        height: min(20.8333vw, 400px);
+    }
+
+    .falling-object:nth-child(2) {
+        height: min(10.4167vw, 200px);
+    }
+
+    .falling-object:nth-child(3) {
+        height: min(31.25vw, 600px);
+    }
+
+    .falling-object:nth-child(4) {
+        height: min(17.1875vw, 330px);
+    }
+
+    .falling-object:nth-child(5) {
+        height: min(26.0417vw, 500px);
+    }
+}
+
+/* Venue booking panel: replace bg04.png with a responsive CSS silhouette. */
+@media (min-width: 641px) and (max-width: 1920px) {
+    .booking-panel {
+        left: 50%;
+        width: min(
+            calc(100% + clamp(48px, 10vw, 180px)),
+            calc(100vw - 32px),
+            1800px
+        );
+        max-width: none;
+        margin-right: 0;
+        margin-left: 0;
+        background: var(--blue-pale, #e7f4f6);
+        clip-path: polygon(
+            0 4%,
+            37% 5%,
+            80% 0,
+            100% 6%,
+            100% 95%,
+            63% 100%,
+            0 97%
+        );
+        transform: translateX(-50%);
+    }
+
+    .booking-section {
+        max-width: 100vw;
+        overflow-x: clip;
+    }
+}
+
+/* The venue page has decorative layers extending beyond the canvas. Include
+   the 1920px reference in horizontal overflow containment. */
+@media (max-width: 1920px) {
+    html,
+    body {
+        max-width: 100%;
+        overflow-x: clip;
+    }
+}
+
+
+/* About banner fills the viewport below the header. Auto height keeps its
+   bottom artwork and slogan visible instead of clipping them. */
+.page-content > .about-hero {
+    height: auto;
+    min-height: calc(100svh - clamp(100px, 8vw, 156px));
+    padding-bottom: clamp(72px, 8vh, 120px);
+}
+
+/* Place news pagination above the list (and therefore above the date column)
+   at every viewport size without changing Vue's pagination behaviour. */
+.news-content {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: clamp(14px, 2vw, 28px);
+    min-width: 0;
+}
+
+.news-content > .category-tabs {
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
+}
+
+.news-content > .pagination {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: start;
+    justify-content: flex-end;
+    width: auto;
+    min-height: clamp(42px, 3vw, 54px);
+    margin-top: clamp(10px, 0.8vw, 15px);
+    margin-bottom: clamp(18px, 2.2vw, 34px);
+}
+
+.news-content > .news-list {
+    grid-column: 1 / -1;
+    grid-row: 2;
+}
+
+.news-content > .empty {
+    grid-column: 1 / -1;
+    grid-row: 3;
+}
+
+@media (max-width: 640px) {
+    .news-content > .pagination {
+        width: auto;
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+}
+
+/* Homepage 1280px: reserve the complete transport content area before the
+   footer begins, including the absolutely positioned route action. */
+@media (min-width: 1200px) and (max-width: 1365px) {
+    .page .transport {
+        position: relative;
+        z-index: 1;
+        min-height: max-content;
+        padding-bottom: clamp(120px, 10vw, 150px);
+        overflow: visible;
+        background-color: #ffffff;
+    }
+
+    .page .transport-grid {
+        align-items: start;
+    }
+
+    .page .transport-panel,
+    .page .map {
+        height: auto;
+        min-height: 440px;
+    }
+
+    .page > .site-footer {
+        position: relative;
+        z-index: 0;
+        clear: both;
+        margin-top: 0;
+    }
+}
+
+/* 1280px navigation parity across every page. */
+@media (min-width: 1200px) and (max-width: 1365px) {
+    .actions {
+        flex: none;
+        gap: clamp(14px, 1.4vw, 20px);
+    }
+
+    .actions .login,
+    .actions .shop {
+        flex: none;
+        font-size: 18px;
+        white-space: nowrap;
+    }
+
+    .actions .login {
+        gap: 8px;
+    }
+
+    .actions .login svg {
+        width: 20px;
+        height: 20px;
+        flex: none;
+    }
+
+    .actions .shop {
+        min-width: 128px;
+        padding-right: 18px;
+        padding-left: 18px;
+        justify-content: center;
+    }
+
+    /* About keeps a full first viewport, but its artwork is scaled to fit the
+       1280 x 1080 composition instead of using the large desktop cards. */
+    .page-content > .about-hero {
+        height: calc(100svh - clamp(92px, 7.5vw, 112px));
+        min-height: 760px;
+        padding-top: clamp(78px, 8vh, 96px);
+        padding-bottom: clamp(46px, 5vh, 60px);
+    }
+
+    .about-hero .hero-marquee-group {
+        align-items: flex-start;
+        gap: 20px;
+        padding-right: 20px;
+    }
+
+    .about-hero .hero-card--short {
+        width: 220px;
+    }
+
+    .about-hero .hero-card--tall {
+        width: 330px;
+    }
+
+    .about-hero .hero-card--medium {
+        width: 280px;
+    }
+
+    .about-hero .hero-card--small {
+        width: 210px;
+    }
+
+    .about-hero .hero-card--short .hero-card-image {
+        height: 300px;
+    }
+
+    .about-hero .hero-card--tall .hero-card-image {
+        height: 410px;
+    }
+
+    .about-hero .hero-card--medium .hero-card-image {
+        height: 360px;
+    }
+
+    .about-hero .hero-card--small .hero-card-image {
+        height: 275px;
+    }
+
+    .about-hero .hero-card:nth-child(1),
+    .about-hero .hero-card:nth-child(3),
+    .about-hero .hero-card:nth-child(4) {
+        margin-top: 42px;
+    }
+
+    .about-hero .hero-card-title {
+        margin-top: 12px;
+        font-size: 18px;
+    }
+
+    .about-hero .hero-slogan {
+        right: 12px;
+        bottom: 0;
+        font-size: clamp(48px, 4.7vw, 60px);
+        line-height: 0.9;
+    }
+}
+
+/* 1280px About timeline: shorten the final 2023 stem and remove the oversized
+   gap before the venue guide. */
+@media (min-width: 900px) and (max-width: 1439px) {
+    .about-hero .hero-marquee-group {
+        gap: clamp(16px, 1.6vw, 22px) !important;
+        padding-right: clamp(16px, 1.6vw, 22px) !important;
+    }
+
+    .about-hero .hero-card--short { width: clamp(190px, 17.2vw, 248px) !important; }
+    .about-hero .hero-card--tall { width: clamp(290px, 25.8vw, 372px) !important; }
+    .about-hero .hero-card--medium { width: clamp(245px, 21.9vw, 315px) !important; }
+    .about-hero .hero-card--small { width: clamp(180px, 16.4vw, 236px) !important; }
+    .about-hero .hero-card--short .hero-card-image { height: clamp(264px, 23.4vw, 337px) !important; }
+    .about-hero .hero-card--tall .hero-card-image { height: clamp(340px, 32vw, 460px) !important; }
+    .about-hero .hero-card--medium .hero-card-image { height: clamp(301px, 28.1vw, 404px) !important; }
+    .about-hero .hero-card--small .hero-card-image { height: clamp(221px, 20.7vw, 298px) !important; }
+}
+
+@media (min-width: 1200px) and (max-width: 1365px) {
+    .history-section {
+        padding-top: 80px;
+        padding-bottom: 54px;
+    }
+
+    .history-viewport::after {
+        top: 300px;
+    }
+
+    .history-track {
+        height: 560px;
+    }
+
+    .history-item::before {
+        top: 292px;
+    }
+
+    .history-item--top .history-stem {
+        top: 48px;
+        height: 252px;
+    }
+
+    .history-item--bottom .history-stem {
+        top: 300px;
+        height: 120px;
+    }
+
+    .history-item--bottom .history-content {
+        top: 350px;
+    }
+
+    .venue-section {
+        padding-top: 64px;
+    }
+}
+
+/* From 1440 down, keep the news list nearer the visual centre and align the
+   contact form's first row with the top of the left-side information. */
+@media (min-width: 1200px) and (max-width: 1535px) {
+    .news-page {
+        grid-template-columns: minmax(160px, 190px) minmax(0, 1fr);
+        gap: clamp(28px, 2.5vw, 38px);
+    }
+
+    .contact-layout {
+        align-items: start;
+    }
+
+    .contact-info-section {
+        align-self: start;
+    }
+
+    .contact-form {
+        align-self: start;
+        margin-top: clamp(104px, 8vw, 120px);
+    }
+}
+
+/* Final 1280×720 acceptance layer. Keep this at the end of the stylesheet so
+   the site-wide height system cannot re-expand these components. */
+@media (min-width: 1200px) and (max-width: 1365px) and (max-height: 900px) {
+    /* Homepage is a true first-screen banner: the following news section must
+       begin below the viewport. */
+    .page > .hero,
+    .hero {
+        height: 100svh !important;
+        min-height: 100svh !important;
+    }
+
+    /* Give the irregular blue silhouette enough content-driven space to wrap
+       the complete venue guide rather than ending at its final row. */
+    .feature-venue {
+        box-sizing: border-box;
+        padding-bottom: clamp(100px, 16vh, 126px) !important;
+    }
+
+    .page .transport-panel .route-btn,
+    .transport .transport-panel .route-btn {
+        right: auto !important;
+        bottom: 36.5px !important;
+        left: calc(100% - 115px) !important;
+        transform: translate(-50%, 50%) !important;
+    }
+
+    .page .transport-panel .route-btn:hover,
+    .transport .transport-panel .route-btn:hover {
+        transform: translate(-50%, calc(50% - 3px)) !important;
+    }
+
+    .page-content > .about-hero,
+    .about-hero {
+        height: max(520px, calc(100svh - clamp(92px, 13.75vh, 104px))) !important;
+        min-height: max(520px, calc(100svh - clamp(92px, 13.75vh, 104px))) !important;
+    }
+
+    .about-hero .hero-slogan {
+        bottom: 4px !important;
+    }
+}
+
+@media (min-width: 641px) and (max-height: 900px) {
+    body > #app:has(.site-footer) > .site-footer,
+    .site-footer,
+    .footer {
+        padding-top: clamp(26px, 4.45vh, 32px) !important;
+        padding-bottom: clamp(26px, 4.45vh, 32px) !important;
+    }
+
+    .site-footer .footer-inner,
+    .footer .footer-inner {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+}
+
+/* Final timeline symmetry layer. */
+.history-viewport {
+    --timeline-axis-y: 360px;
+    --timeline-stem-start: 48px;
+}
+
+.history-item--bottom .history-stem {
+    height: calc(var(--timeline-axis-y) - var(--timeline-stem-start)) !important;
+}
+
+@media (min-width: 641px) and (max-width: 1439px) {
+    .history-viewport {
+        --timeline-stem-start: clamp(38px, 3.75vw, 48px);
+    }
+}
+
+@media (min-width: 641px) and (max-height: 900px) {
+    .history-viewport {
+        --timeline-stem-start: clamp(24px, 4vh, 36px);
+    }
+
+    .history-track,
+    .history-viewport.is-at-end .history-track {
+        height: max(
+            clamp(350px, 48vh, 432px),
+            calc((var(--timeline-axis-y) * 2) - var(--timeline-stem-start) + 20px)
+        ) !important;
+        min-height: calc((var(--timeline-axis-y) * 2) - var(--timeline-stem-start) + 20px) !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .history-viewport {
+        --timeline-axis-y: 300px;
+        --timeline-stem-start: 34px;
+    }
+}

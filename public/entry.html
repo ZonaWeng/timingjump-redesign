@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>臺灣玻璃館｜入口頁</title>
+    <link rel="icon" type="image/png" href="./invite/img/favicon.png?v=20260804">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Vue 3 CDN -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ink: "#1E1E1E",
+                        sand: "#E5DFD9",
+                        gold: "#E5D685",
+                        aqua: "#81C6CF",
+                    },
+                    fontFamily: {
+                        sans: ["Arial", "Noto Sans TC", "Noto Sans", "Microsoft JhengHei", "sans-serif"],
+                        serif: ["Georgia", "Times New Roman", "Noto Sans TC", "Noto Sans", "serif"],
+                    },
+                },
+            },
+        };
+    </script>
+
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        html,
+        body,
+        #app {
+            width: 100%;
+            min-height: 100%;
+            margin: 0;
+        }
+
+        body {
+            overflow-x: hidden;
+            background: #1e1e1e;
+        }
+
+        button,
+        a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* 整頁入口 */
+        .entry-page {
+            isolation: isolate;
+            min-height: 100svh;
+            overflow: hidden;
+            background: #e5dfd9;
+        }
+
+        /* 整體顆粒紋理 */
+        .noise-layer {
+            position: absolute;
+            z-index: 0;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.18;
+            mix-blend-mode: multiply;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='.82'/%3E%3C/svg%3E");
+        }
+
+        /* =====================================================
+           黃色、藍色液體區塊
+        ====================================================== */
+        .color-cloud {
+            position: absolute;
+            z-index: 1;
+            overflow: hidden;
+            pointer-events: none;
+
+            /* JavaScript 會即時修改這些變數 */
+            --liquid-x: 0px;
+            --liquid-y: 0px;
+            --liquid-rotate: 0deg;
+            --liquid-scale-x: 1;
+            --liquid-scale-y: 1;
+            --water-x: 50%;
+            --water-y: 50%;
+
+            transform:
+                translate3d(var(--liquid-x), var(--liquid-y), 0)
+                rotate(var(--liquid-rotate))
+                scale(var(--liquid-scale-x), var(--liquid-scale-y));
+
+            transform-origin: center;
+            transition: transform 420ms cubic-bezier(0.22, 0.61, 0.36, 1);
+            will-change: transform;
+        }
+
+        .portal-zone {
+            position: absolute;
+            z-index: 20;
+            top: 0;
+            bottom: 0;
+            width: 50%;
+            padding: 0;
+            border: 0;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .portal-zone--explore { left: 0; }
+        .portal-zone--shop { right: 0; }
+
+        .color-cloud::before,
+        .color-cloud::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        /* 顆粒 */
+        .color-cloud::before {
+            z-index: 1;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)' opacity='.68'/%3E%3C/svg%3E");
+            opacity: 0.34;
+            mix-blend-mode: multiply;
+        }
+
+        /* 滑鼠位置的水面高光 */
+        .color-cloud::after {
+            z-index: 2;
+            opacity: 0.55;
+            mix-blend-mode: screen;
+            background:
+                radial-gradient(
+                    circle at var(--water-x) var(--water-y),
+                    rgba(255, 255, 255, 0.7) 0 2%,
+                    rgba(255, 255, 255, 0.26) 5%,
+                    transparent 10%,
+                    rgba(255, 255, 255, 0.2) 15%,
+                    transparent 22%,
+                    rgba(255, 255, 255, 0.1) 28%,
+                    transparent 38%
+                );
+            animation: water-light 2.8s ease-in-out infinite alternate;
+        }
+
+        @keyframes water-light {
+            from {
+                opacity: 0.35;
+            }
+
+            to {
+                opacity: 0.68;
+            }
+        }
+
+        /* 滑鼠滑過時動態產生的水波 */
+        .water-ripple {
+            position: absolute;
+            z-index: 3;
+            width: 22px;
+            aspect-ratio: 1;
+            border: 1.5px solid rgba(255, 255, 255, 0.72);
+            border-radius: 50%;
+            background: radial-gradient(
+                circle,
+                rgba(255, 255, 255, 0.18),
+                transparent 68%
+            );
+            box-shadow:
+                0 0 8px rgba(255, 255, 255, 0.38),
+                inset 0 0 6px rgba(255, 255, 255, 0.18);
+            transform: translate(-50%, -50%) scale(0.15);
+            opacity: 0.95;
+            pointer-events: none;
+            animation: water-ripple 1.15s ease-out forwards;
+        }
+
+        @keyframes water-ripple {
+            from {
+                transform: translate(-50%, -50%) scale(0.15);
+                opacity: 0.95;
+            }
+
+            to {
+                transform: translate(-50%, -50%) scale(9);
+                opacity: 0;
+            }
+        }
+
+        .yellow-cloud {
+            width: min(58vw, 900px);
+            height: min(90vh, 1200px);
+            top: 2vh;
+            right: -12vw;
+
+            /* 七邊形＋Q 圓弧轉角 */
+            -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath fill='black' d='M25 7 L67 3 Q72 3 76 7 L91 22 Q95 26 96 32 L98 56 Q98 62 94 67 L77 87 Q73 92 67 93 L41 98 Q35 99 30 95 L9 71 Q5 67 6 61 L18 14 Q19 9 25 7 Z'/%3E%3C/svg%3E");
+            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath fill='black' d='M25 7 L67 3 Q72 3 76 7 L91 22 Q95 26 96 32 L98 56 Q98 62 94 67 L77 87 Q73 92 67 93 L41 98 Q35 99 30 95 L9 71 Q5 67 6 61 L18 14 Q19 9 25 7 Z'/%3E%3C/svg%3E");
+            -webkit-mask-size: 100% 100%;
+            mask-size: 100% 100%;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+
+            filter:
+                blur(20px)
+                drop-shadow(0 0 30px rgba(229, 214, 133, 0.72))
+                drop-shadow(0 0 64px rgba(229, 214, 133, 0.42));
+            background:
+                radial-gradient(
+                    circle at 45% 42%,
+                    rgba(229, 214, 133, 1) 0 46%,
+                    rgba(229, 214, 133, 0.86) 15%,
+                    rgba(229, 214, 133, 0) 78%
+                );
+        }
+
+        .blue-cloud {
+            width: min(61vw, 900px);
+            height: min(95vh, 1500px);
+            left: -12vw;
+            bottom: -20vh;
+
+            /* 七邊形＋Q 圓弧轉角 */
+            -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath fill='black' d='M26 8 L66 5 Q70 5 73 8 L92 27 Q95 30 95 34 L96 62 Q96 66 93 69 L69 93 Q66 96 62 95 L28 90 Q24 89 21 86 L6 56 Q4 52 6 48 L19 13 Q20 9 26 8 Z'/%3E%3C/svg%3E");
+            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath fill='black' d='M26 8 L66 5 Q70 5 73 8 L92 27 Q95 30 95 34 L96 62 Q96 66 93 69 L69 93 Q66 96 62 95 L28 90 Q24 89 21 86 L6 56 Q4 52 6 48 L19 13 Q20 9 26 8 Z'/%3E%3C/svg%3E");
+            -webkit-mask-size: 100% 100%;
+            mask-size: 100% 100%;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+
+            filter:
+                blur(20px)
+                drop-shadow(0 0 30px rgba(129, 198, 207, 0.72))
+                drop-shadow(0 0 64px rgba(129, 198, 207, 0.42));
+            background:
+                radial-gradient(
+                    circle at 48% 46%,
+                    rgba(129, 198, 207, 1) 0 46%, 
+                    rgba(129, 198, 207, 0.86) 60%,
+                    rgba(129, 198, 207, 0) 78%
+                );
+        }
+
+        /* =====================================================
+           四個透明玻璃
+        ====================================================== */
+        .glass-shape {
+            position: absolute;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.025);
+            backdrop-filter: blur(8px) saturate(115%);
+            -webkit-backdrop-filter: blur(8px) saturate(115%);
+            filter:
+                drop-shadow(0 0 1px rgba(255, 255, 255, 0.95))
+                drop-shadow(0 8px 16px rgba(30, 30, 30, 0.08));
+        }
+
+        .glass-shape::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            mix-blend-mode: normal;
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255, 255, 255, 0.1) 0%,
+                    rgba(255, 255, 255, 0.025) 38%,
+                    transparent 68%
+                );
+        }
+
+        /* 第二層高光調淡，避免整片變白 */
+        .glass-shape::after {
+            content: "";
+            position: absolute;
+            inset: 2px;
+            pointer-events: none;
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255, 255, 255, 0.08),
+                    rgba(255, 255, 255, 0.01) 50%,
+                    rgba(255, 255, 255, 0.04)
+                );
+            clip-path: inherit;
+        }
+
+        /* 動畫會移動這四個外層 */
+        .glass-one,
+        .glass-two-wrap,
+        .glass-three,
+        .glass-four {
+            pointer-events: none;
+            will-change: transform;
+        }
+
+        .glass-one {
+            z-index: 2;
+            width: clamp(95px, 10vw, 150px);
+            aspect-ratio: 1.05;
+            top: 5vh;
+            left: -1.2vw;
+            clip-path: polygon(7% 18%, 66% 0, 93% 19%, 100% 61%, 72% 100%, 29% 93%, 0 68%);
+        }
+
+        .glass-two-wrap {
+            position: absolute;
+            z-index: 2;
+            width: clamp(300px, 29vw, 470px);
+            aspect-ratio: 1.07;
+            top: -3vh;
+            left: 20vw;
+            transform: rotate(-30deg);
+        }
+
+        .glass-two {
+            width: 100%;
+            height: 100%;
+            inset: 0;
+
+            /* 外層：不等邊圓角五邊形；內層：透明中空 */
+            -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cdefs%3E%3Cmask id='glassMask' maskUnits='userSpaceOnUse'%3E%3Crect width='100' height='100' fill='black'/%3E%3Cpath fill='white' d='M22 4 L72 8 Q78 9 81 14 L97 43 Q100 49 97 55 L70 96 Q67 100 61 98 L10 79 Q4 77 5 70 L14 14 Q15 7 22 4 Z'/%3E%3Cellipse cx='53' cy='52' rx='20' ry='22' fill='black'/%3E%3C/mask%3E%3C/defs%3E%3Crect width='100' height='100' fill='black' mask='url(%23glassMask)'/%3E%3C/svg%3E");
+            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cdefs%3E%3Cmask id='glassMask' maskUnits='userSpaceOnUse'%3E%3Crect width='100' height='100' fill='black'/%3E%3Cpath fill='white' d='M22 4 L72 8 Q78 9 81 14 L97 43 Q100 49 97 55 L70 96 Q67 100 61 98 L10 79 Q4 77 5 70 L14 14 Q15 7 22 4 Z'/%3E%3Cellipse cx='53' cy='52' rx='20' ry='22' fill='black'/%3E%3C/mask%3E%3C/defs%3E%3Crect width='100' height='100' fill='black' mask='url(%23glassMask)'/%3E%3C/svg%3E");
+            -webkit-mask-size: 100% 100%;
+            mask-size: 100% 100%;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+        }
+
+        /* 第二塊玻璃中間的白框 */
+        .glass-two-wrap .inner-ring {
+            position: absolute;
+            z-index: 3;
+            width: 40%;
+            height: 44%;
+            top: 30%;
+            left: 33%;
+            border: 1px solid rgba(255, 255, 255, 0.75);
+            border-radius: 48% 52% 55% 45% / 51% 46% 54% 49%;
+            background: transparent;
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+            box-shadow:
+                0 0 2px rgba(255, 255, 255, 0.35),
+                0 3px 7px rgba(30, 30, 30, 0.04);
+            pointer-events: none;
+        }
+
+        .glass-three {
+            z-index: 2;
+            width: clamp(130px, 15vw, 230px);
+            aspect-ratio: 0.9;
+            left: 48vw;
+            bottom: -8vh;
+            transform: rotate(-14deg);
+            clip-path: polygon(15% 0, 68% 4%, 100% 42%, 86% 100%, 32% 90%, 0 48%);
+        }
+
+        .glass-four {
+            z-index: 2;
+            width: clamp(135px, 15vw, 220px);
+            aspect-ratio: 1.18;
+            right: 8vw;
+            bottom: 5vh;
+            transform: rotate(7deg);
+            clip-path: polygon(23% 4%, 74% 0, 98% 31%, 100% 81%, 66% 100%, 14% 88%, 0 48%);
+        }
+
+        /* =====================================================
+           文字、按鈕、Logo
+        ====================================================== */
+        .portal-copy {
+            position: absolute;
+            z-index: 5;
+            color: #fff;
+        }
+
+        .portal-copy--explore {
+            left: 12.5vw;
+            top: 69%;
+            transform: translateY(-50%);
+        }
+
+        .portal-copy--shop {
+            right: 9.5vw;
+            top: 39%;
+            text-align: center;
+        }
+
+        .portal-eyebrow {
+            display: inline-block;
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.35rem;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.82);
+            font-family: "Inter", sans-serif;
+            font-size: clamp(0.95rem, 1.25vw, 1.25rem);
+            font-weight: 700;
+            font-style: normal;
+            line-height: 1;
+            letter-spacing: 0.02em;
+        }
+
+        .portal-title {
+            margin: 0;
+            font-size: clamp(2rem, 3.1vw, 3.6rem);
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: 0.08em;
+            white-space: nowrap;
+        }
+
+        .portal-button {
+            display: grid;
+            width: clamp(112px, 8.4vw, 160px);
+            place-items: center;
+            padding: 0;
+            border: 0;
+            background: transparent;
+            cursor: pointer;
+            transition: transform 220ms ease, filter 220ms ease;
+            filter: drop-shadow(0 8px 10px rgba(30, 30, 30, 0.08));
+        }
+
+        .portal-button:hover {
+            transform: translateY(-4px) scale(1.04);
+            filter: drop-shadow(0 14px 15px rgba(30, 30, 30, 0.14));
+        }
+
+        .portal-button:focus-visible {
+            outline: 3px dotted #1e1e1e;
+            outline-offset: 5px;
+        }
+
+        .portal-button img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .portal-button--explore {
+            margin-top: 0.2rem;
+            margin-left: clamp(-74px, -5.5vw, -56px);
+            color: #70b8c1;
+        }
+
+        .portal-button--shop {
+            margin-top: 0.9rem;
+            margin-right: -2.6vw;
+            margin-left: auto;
+            color: #d1bd54;
+        }
+
+        .brand-logo {
+            position: absolute;
+            z-index: 8;
+            top: 8.5vh;
+            left: 6vw;
+            width: clamp(300px, 33vw, 530px);
+            height: auto;
+            object-fit: contain;
+        }
+
+        /* 使用者偏好減少動態時，關閉動畫 */
+        @media (prefers-reduced-motion: reduce) {
+            .color-cloud,
+            .color-cloud::after,
+            .water-ripple,
+            .glass-one,
+            .glass-two-wrap,
+            .glass-three,
+            .glass-four {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .entry-page {
+                min-height: 920px;
+            }
+
+            .brand-logo {
+                top: 5.5rem;
+                left: 50%;
+                width: min(78vw, 520px);
+                transform: translateX(-50%);
+            }
+
+            .yellow-cloud {
+                width: 90vw;
+                height: 65vh;
+                top: 13rem;
+                right: -38vw;
+            }
+
+            .blue-cloud {
+                width: 100vw;
+                height: 58vh;
+                left: -43vw;
+                bottom: -4rem;
+            }
+
+            .portal-copy--shop {
+                top: 37%;
+                right: 4vw;
+            }
+
+            .portal-copy--explore {
+                top: auto;
+                bottom: 8.5rem;
+                left: 6vw;
+                transform: none;
+            }
+
+            .portal-title {
+                font-size: clamp(1.8rem, 7vw, 3rem);
+            }
+
+            .glass-two-wrap {
+                width: 330px;
+                top: 10rem;
+                left: 34vw;
+            }
+
+            .glass-three {
+                left: 45vw;
+            }
+
+            .glass-four {
+                right: 2vw;
+                bottom: 1rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .entry-page {
+                height: 100svh;
+                min-height: 100svh;
+            }
+
+            .brand-logo {
+                top: 4.5rem;
+                width: 86vw;
+            }
+
+            .yellow-cloud {
+                width: 118vw;
+                height: 49vh;
+                top: 11rem;
+                right: -72vw;
+            }
+
+            .blue-cloud {
+                width: 120vw;
+                height: 52vh;
+                left: -71vw;
+                bottom: -3rem;
+            }
+
+            .portal-copy--shop {
+                top: 34%;
+                right: 3vw;
+            }
+
+            .portal-copy--explore {
+                left: 4vw;
+                bottom: 6rem;
+            }
+
+            .portal-eyebrow {
+                font-size: 0.8rem;
+            }
+
+            .portal-title {
+                font-size: 1.65rem;
+            }
+
+            .portal-button {
+                width: 96px;
+            }
+
+            .portal-button--explore {
+                margin-top: 0.8rem;
+                margin-left: 0;
+            }
+
+            .portal-button--shop {
+                margin-right: 0;
+            }
+
+            .glass-one {
+                top: 2.7rem;
+                width: 90px;
+            }
+
+            .glass-two-wrap {
+                width: 250px;
+                top: 9rem;
+                left: 20vw;
+            }
+
+            .glass-three {
+                width: 130px;
+                left: 41vw;
+            }
+
+            .glass-four {
+                width: 125px;
+                right: -0.8rem;
+                bottom: 0.5rem;
+            }
+        }
+
+        @media (max-width: 430px) {
+            .yellow-cloud {
+                right: -58vw;
+            }
+
+            .blue-cloud {
+                left: -65vw;
+                bottom: 0.5rem;
+            }
+
+            .portal-copy--explore {
+                bottom: 8rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="invite/rwd.css">
+</head>
+
+<body>
+    <div id="app">
+        <main class="entry-page relative" aria-label="臺灣玻璃館網站入口">
+            <!-- 整體淡顆粒 -->
+            <div class="noise-layer" aria-hidden="true"></div>
+
+            <!-- 彩色液體區塊 -->
+            <div class="color-cloud yellow-cloud" aria-hidden="true"></div>
+            <div class="color-cloud blue-cloud" aria-hidden="true"></div>
+
+            <!-- 四塊透明玻璃造型 -->
+            <div class="glass-shape glass-one" aria-hidden="true"></div>
+
+            <div class="glass-two-wrap" aria-hidden="true">
+                <div class="glass-shape glass-two"></div>
+                <span class="inner-ring"></span>
+            </div>
+
+            <div class="glass-shape glass-three" aria-hidden="true"></div>
+            <div class="glass-shape glass-four" aria-hidden="true"></div>
+
+            <button
+                v-for="portal in portals"
+                :key="`${portal.id}-zone`"
+                type="button"
+                class="portal-zone"
+                :class="`portal-zone--${portal.id}`"
+                :aria-label="`前往${portal.title}`"
+                @click="enterPortal(portal)"
+            ></button>
+
+            <!-- 圖片資源仍位於 invite/img；此頁已移至專案根目錄。 -->
+            <img class="brand-logo" src="./invite/img/logo_黑.png" alt="臺灣玻璃館">
+
+            <!-- Vue 產生左右兩個入口 -->
+            <section
+                v-for="portal in portals"
+                :key="portal.id"
+                class="portal-copy"
+                :class="`portal-copy--${portal.id}`"
+            >
+                <p class="portal-eyebrow">
+                    {{ portal.english }}
+                </p>
+
+                <h2 class="portal-title">
+                    {{ portal.title }}
+                </h2>
+
+                <button
+                    type="button"
+                    class="portal-button"
+                    :class="`portal-button--${portal.id}`"
+                    :aria-label="`前往${portal.title}`"
+                    @click="enterPortal(portal)"
+                >
+                    <img
+                        :src="portal.direction === 'left'
+                            ? './invite/img/entrance/btn-l.png'
+                            : './invite/img/entrance/btn-r.png'"
+                        alt=""
+                        aria-hidden="true"
+                    >
+                </button>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const {
+            createApp,
+            onMounted,
+            onBeforeUnmount,
+        } = Vue;
+
+        createApp({
+            setup() {
+                const portals = [
+                    {
+                        id: "explore",
+                        english: "EXPLORE",
+                        title: "場館探索",
+                        direction: "left",
+                        url: "/invite",
+                    },
+                    {
+                        id: "shop",
+                        english: "SHOP",
+                        title: "商品專區",
+                        direction: "right",
+                        url: "/shop",
+                    },
+                ];
+
+                const enterPortal = (portal) => {
+                    window.location.href = portal.url;
+                };
+
+                let stopPageAnimations = () => {};
+
+                onMounted(() => {
+                    const page = document.querySelector(".entry-page");
+
+                    if (!page) return;
+
+                    const reduceMotion = window.matchMedia(
+                        "(prefers-reduced-motion: reduce)"
+                    );
+
+                    if (reduceMotion.matches) return;
+
+                    const clouds = [
+                        ...page.querySelectorAll(".color-cloud"),
+                    ];
+
+                    const activeAnimations = new Set();
+                    const startTimers = [];
+
+                    let pointerFrame = 0;
+                    let stopped = false;
+
+                    const clamp = (number, min, max) => {
+                        return Math.max(min, Math.min(number, max));
+                    };
+
+                    const random = (min, max) => {
+                        return Math.random() * (max - min) + min;
+                    };
+
+                    /* 建立一個水波圓圈 */
+                    const createRipple = (cloud, clientX, clientY) => {
+                        const rect = cloud.getBoundingClientRect();
+                        const ripple = document.createElement("span");
+
+                        ripple.className = "water-ripple";
+                        ripple.style.left = `${clientX - rect.left}px`;
+                        ripple.style.top = `${clientY - rect.top}px`;
+
+                        cloud.appendChild(ripple);
+
+                        ripple.addEventListener(
+                            "animationend",
+                            () => {
+                                ripple.remove();
+                            },
+                            { once: true }
+                        );
+                    };
+
+                    /* 滑鼠移動：液體稍微變形＋產生水波 */
+                    const handlePointerMove = (event) => {
+                        cancelAnimationFrame(pointerFrame);
+
+                        pointerFrame = requestAnimationFrame(() => {
+                            clouds.forEach((cloud, index) => {
+                                const rect = cloud.getBoundingClientRect();
+
+                                const localX =
+                                    ((event.clientX - rect.left) / rect.width) * 100;
+
+                                const localY =
+                                    ((event.clientY - rect.top) / rect.height) * 100;
+
+                                const isInside =
+                                    localX >= 0 &&
+                                    localX <= 100 &&
+                                    localY >= 0 &&
+                                    localY <= 100;
+
+                                const normalizedX = clamp(
+                                    (localX - 50) / 50,
+                                    -1,
+                                    1
+                                );
+
+                                const normalizedY = clamp(
+                                    (localY - 50) / 50,
+                                    -1,
+                                    1
+                                );
+
+                                const influence = isInside ? 1 : 0.12;
+                                const direction = index === 0 ? 1 : -1;
+
+                                const moveX =
+                                    normalizedX * 14 * direction * influence;
+
+                                const moveY =
+                                    normalizedY * 11 * influence;
+
+                                const rotate =
+                                    normalizedX * 1.8 * direction * influence;
+
+                                const scaleX =
+                                    1 + Math.abs(normalizedY) * 0.025 * influence;
+
+                                const scaleY =
+                                    1 + Math.abs(normalizedX) * 0.025 * influence;
+
+                                cloud.style.setProperty(
+                                    "--liquid-x",
+                                    `${moveX}px`
+                                );
+
+                                cloud.style.setProperty(
+                                    "--liquid-y",
+                                    `${moveY}px`
+                                );
+
+                                cloud.style.setProperty(
+                                    "--liquid-rotate",
+                                    `${rotate}deg`
+                                );
+
+                                cloud.style.setProperty(
+                                    "--liquid-scale-x",
+                                    scaleX
+                                );
+
+                                cloud.style.setProperty(
+                                    "--liquid-scale-y",
+                                    scaleY
+                                );
+
+                                cloud.style.setProperty(
+                                    "--water-x",
+                                    `${clamp(localX, 0, 100)}%`
+                                );
+
+                                cloud.style.setProperty(
+                                    "--water-y",
+                                    `${clamp(localY, 0, 100)}%`
+                                );
+
+                                const now = performance.now();
+                                const lastRipple = Number(
+                                    cloud.dataset.lastRipple || 0
+                                );
+
+                                /* 每 110ms 最多建立一個水波 */
+                                if (isInside && now - lastRipple > 110) {
+                                    createRipple(
+                                        cloud,
+                                        event.clientX,
+                                        event.clientY
+                                    );
+
+                                    cloud.dataset.lastRipple = String(now);
+                                }
+                            });
+                        });
+                    };
+
+                    /* 滑鼠離開畫面後回到原本位置 */
+                    const resetClouds = () => {
+                        clouds.forEach((cloud) => {
+                            cloud.style.setProperty("--liquid-x", "0px");
+                            cloud.style.setProperty("--liquid-y", "0px");
+                            cloud.style.setProperty("--liquid-rotate", "0deg");
+                            cloud.style.setProperty("--liquid-scale-x", "1");
+                            cloud.style.setProperty("--liquid-scale-y", "1");
+                        });
+                    };
+
+                    page.addEventListener("pointermove", handlePointerMove);
+                    page.addEventListener("pointerleave", resetClouds);
+
+                    /*
+                     * glass-two 必須移動 .glass-two-wrap，
+                     * 才能讓玻璃本體和中間白框一起移動。
+                     */
+                    const glasses = [
+                        {
+                            element: page.querySelector(".glass-one"),
+                            x: 0,
+                            y: 0,
+                            rotate: 0,
+                        },
+                        {
+                            element: page.querySelector(".glass-two-wrap"),
+                            x: 0,
+                            y: 0,
+                            rotate: -30,
+                        },
+                        {
+                            element: page.querySelector(".glass-three"),
+                            x: 0,
+                            y: 0,
+                            rotate: -14,
+                        },
+                        {
+                            element: page.querySelector(".glass-four"),
+                            x: 0,
+                            y: 0,
+                            rotate: 7,
+                        },
+                    ].filter((glass) => glass.element);
+
+                    /* 讓單一玻璃移動到下一個隨機位置 */
+                    const moveGlassRandomly = (glass) => {
+                        if (stopped) return;
+
+                        const element = glass.element;
+                        const width = element.offsetWidth;
+                        const height = element.offsetHeight;
+                        const baseLeft = element.offsetLeft;
+                        const baseTop = element.offsetTop;
+
+                        /* 允許一小部分超出畫面，會比較自然 */
+                        const overflow = Math.min(width, height) * 0.22;
+
+                        const minX = -baseLeft - overflow;
+                        const maxX =
+                            page.clientWidth - baseLeft - width + overflow;
+
+                        const minY = -baseTop - overflow;
+                        const maxY =
+                            page.clientHeight - baseTop - height + overflow;
+
+                        const targetX = random(minX, maxX);
+                        const targetY = random(minY, maxY);
+
+                        const rotateDirection =
+                            Math.random() > 0.5 ? 1 : -1;
+
+                        const targetRotate =
+                            glass.rotate +
+                            random(120, 320) * rotateDirection;
+
+                        /* 大約 10～17 秒移動到下一個位置 */
+                        const duration = random(10000, 17000);
+
+                        const startTransform =
+                            `translate3d(${glass.x}px, ${glass.y}px, 0) ` +
+                            `rotate(${glass.rotate}deg)`;
+
+                        const endTransform =
+                            `translate3d(${targetX}px, ${targetY}px, 0) ` +
+                            `rotate(${targetRotate}deg)`;
+
+                        const animation = element.animate(
+                            [
+                                { transform: startTransform },
+                                { transform: endTransform },
+                            ],
+                            {
+                                duration,
+                                easing: "cubic-bezier(0.45, 0.05, 0.55, 0.95)",
+                                fill: "forwards",
+                            }
+                        );
+
+                        activeAnimations.add(animation);
+
+                        animation.addEventListener(
+                            "finish",
+                            () => {
+                                activeAnimations.delete(animation);
+
+                                glass.x = targetX;
+                                glass.y = targetY;
+                                glass.rotate = targetRotate;
+
+                                element.style.transform = endTransform;
+                                animation.cancel();
+
+                                /* 停一下再前往下一個隨機位置 */
+                                const nextTimer = window.setTimeout(
+                                    () => {
+                                        moveGlassRandomly(glass);
+                                    },
+                                    random(80, 650)
+                                );
+
+                                startTimers.push(nextTimer);
+                            },
+                            { once: true }
+                        );
+                    };
+
+                    /* 四個玻璃錯開時間啟動 */
+                    glasses.forEach((glass, index) => {
+                        glass.element.style.transform =
+                            `translate3d(0, 0, 0) rotate(${glass.rotate}deg)`;
+
+                        const timer = window.setTimeout(() => {
+                            moveGlassRandomly(glass);
+                        }, index * 500);
+
+                        startTimers.push(timer);
+                    });
+
+                    stopPageAnimations = () => {
+                        stopped = true;
+
+                        cancelAnimationFrame(pointerFrame);
+
+                        page.removeEventListener(
+                            "pointermove",
+                            handlePointerMove
+                        );
+
+                        page.removeEventListener(
+                            "pointerleave",
+                            resetClouds
+                        );
+
+                        startTimers.forEach((timer) => {
+                            clearTimeout(timer);
+                        });
+
+                        activeAnimations.forEach((animation) => {
+                            animation.cancel();
+                        });
+
+                        activeAnimations.clear();
+
+                        page.querySelectorAll(".water-ripple").forEach(
+                            (ripple) => {
+                                ripple.remove();
+                            }
+                        );
+                    };
+                });
+
+                onBeforeUnmount(() => {
+                    stopPageAnimations();
+                });
+
+                return {
+                    portals,
+                    enterPortal,
+                };
+            },
+        }).mount("#app");
+    </script>
+</body>
+
+</html>
