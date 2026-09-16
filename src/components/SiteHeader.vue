@@ -278,11 +278,12 @@ z-index: 100;
   }
 
   .header-actions {
-    gap: 16px;
+    gap: 2px;
+    align-items: center;
   }
 
   .login-button {
-    padding: 6px;
+    padding: 0;
     font-size: 0;
   }
 
@@ -401,7 +402,7 @@ z-index: 100;
 
 @media (max-width: 640px) {
   .brand img { height: 30px; }
-  .header-actions { gap: 4px; transform: none; }
+  .header-actions { gap: 2px; transform: none; }
   .login-button img { width: 22px; height: 22px; }
 }
 </style>
