@@ -398,4 +398,10 @@ z-index: 100;
     font-size: 25px;
   }
 }
+
+@media (max-width: 640px) {
+  .brand img { height: 30px; }
+  .header-actions { gap: 4px; transform: none; }
+  .login-button img { width: 22px; height: 22px; }
+}
 </style>
