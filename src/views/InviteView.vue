@@ -240,7 +240,7 @@ onBeforeUnmount(() => {
     </div>
 
     <RouterLink class="news-view-all" to="/invite/news">
-      VIEW ALL ↗
+      VIEW ALL &#8599;&#65038;
     </RouterLink>
   </div>
 </section>

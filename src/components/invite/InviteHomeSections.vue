@@ -108,12 +108,12 @@ onBeforeUnmount(() => featureResizeObserver?.disconnect())
       </div>
     </section>
     <section id="venue" class="wrap venue">
-      <div class="topline"><h2 class="section-title"><img :src="titleIcon" alt="">場館導覽</h2><RouterLink to="/invite/venue" class="view-all">VIEW ALL ↗</RouterLink></div>
+      <div class="topline"><h2 class="section-title"><img :src="titleIcon" alt="">場館導覽</h2><RouterLink to="/invite/venue" class="view-all">VIEW ALL &#8599;&#65038;</RouterLink></div>
       <div class="venue-grid"><RouterLink v-for="item in venues" :key="item.title" to="/invite/venue" class="venue-card"><div class="venue-img"><img :src="item.image" :alt="item.title"></div><div><h3>{{ item.title }}</h3><p>{{ item.text }}</p></div></RouterLink></div>
     </section>
   </div>
 
-  <section id="activities" class="activities"><div class="wrap"><div class="topline"><h2 class="section-title"><img :src="titleIcon" alt="">體驗活動</h2><RouterLink to="/invite/activity" class="view-all">VIEW ALL ↗</RouterLink></div><div class="activity-track"><RouterLink v-for="item in activities" :key="item.title" to="/invite/activity" class="activity-card"><img :src="item.image" :alt="item.title"><div class="activity-content"><h3>{{ item.title }}</h3><p>{{ item.text }}</p></div></RouterLink></div></div></section>
+  <section id="activities" class="activities"><div class="wrap"><div class="topline"><h2 class="section-title"><img :src="titleIcon" alt="">體驗活動</h2><RouterLink to="/invite/activity" class="view-all">VIEW ALL &#8599;&#65038;</RouterLink></div><div class="activity-track"><RouterLink v-for="item in activities" :key="item.title" to="/invite/activity" class="activity-card"><img :src="item.image" :alt="item.title"><div class="activity-content"><h3>{{ item.title }}</h3><p>{{ item.text }}</p></div></RouterLink></div></div></section>
   <section id="transport" class="transport"><div class="wrap"><h2 class="section-title"><img :src="titleIcon" alt="">交通資訊</h2><div class="transport-grid"><div class="transport-panel"><div class="tabs" role="tablist"><button v-for="(item, index) in routes" :key="item.name" :class="{ active: index === activeRoute }" type="button" @click="activeRoute = index">{{ item.name }}</button></div><div class="route-copy">{{ currentRoute.text }}</div><a :href="currentRoute.url" target="_blank" rel="noopener noreferrer" class="route-button">{{ currentRoute.buttonText }} <span aria-hidden="true">↗</span></a></div><a :href="mapUrl" target="_blank" rel="noopener" class="map"><iframe title="臺灣玻璃館 Google 地圖" src="https://www.google.com/maps?q=台灣玻璃館&output=embed" loading="lazy" /></a></div></div></section>
 </template>
 

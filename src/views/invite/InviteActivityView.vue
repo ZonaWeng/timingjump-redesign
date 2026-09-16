@@ -59,7 +59,7 @@ const activities = [
       <div class="activity-wrap">
         <header class="list-heading">
           <h2 id="activity-list-title"><img :src="headingIcon" alt="">體驗活動</h2>
-          <RouterLink to="/shop/products">VIEW ALL ↗</RouterLink>
+          <RouterLink to="/shop/products">VIEW ALL &#8599;&#65038;</RouterLink>
         </header>
         <div class="activity-grid">
           <article v-for="([category, title, image]) in activities" :key="title" class="activity-card">

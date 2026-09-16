@@ -88,9 +88,9 @@ const courses=[['循環再生玻璃吹製體驗','從回收、熔融、塑形到
 
 <template><main class="about-page">
   <section class="about-hero" aria-label="關於我們場館特色"><img class="hero-bg one" :src="bannerBg01" alt=""><img class="hero-bg two" :src="bannerBg02" alt=""><div class="hero-track"><div v-for="repeat in 2" :key="repeat" class="hero-group"><img v-for="(slide,index) in heroSlides" :key="`${repeat}-${index}`" :src="slide" alt="臺灣玻璃館場館特色"></div></div><p>A Window on Taiwan</p></section>
-  <section class="history section-wrap"><header class="section-header"><h1><img :src="headingIcon" alt="">歷史沿革</h1><div class="arrows"><button :disabled="timelineIndex===0" @click="moveTimeline(-1)">←</button><button :disabled="timelineIndex===timelineItems.length-1" @click="moveTimeline(1)">→</button></div></header><div class="timeline-window"><div class="timeline" :style="{transform:`translateX(-${timelineIndex*310}px)`}"><article v-for="([year,lines],index) in timelineItems" :key="year" :class="['timeline-item',{bottom:index%2}]"><div><strong>{{ year }}</strong><p v-for="line in lines" :key="line">{{ line }}</p></div></article></div></div></section>
+  <section class="history section-wrap"><header class="section-header"><h1><img :src="headingIcon" alt="">歷史沿革</h1><div class="arrows"><button :disabled="timelineIndex===0" @click="moveTimeline(-1)">&#8592;&#65038;</button><button :disabled="timelineIndex===timelineItems.length-1" @click="moveTimeline(1)">&#8594;&#65038;</button></div></header><div class="timeline-window"><div class="timeline" :style="{transform:`translateX(-${timelineIndex*310}px)`}"><article v-for="([year,lines],index) in timelineItems" :key="year" :class="['timeline-item',{bottom:index%2}]"><div><strong>{{ year }}</strong><p v-for="line in lines" :key="line">{{ line }}</p></div></article></div></div></section>
   <section class="venue section-wrap"><h2><img :src="headingIcon" alt="">場館導覽</h2><div class="floor-tabs"><button v-for="floor in venueFloors" :key="floor.id" :class="{active:activeFloorId===floor.id}" @click="selectFloor(floor.id)">{{floor.label}}</button></div><div class="venue-layout"><div class="venue-map"><img :src="activeFloor.map" :alt="`${activeFloor.label} 場館導覽圖`"><button v-for="location in activeFloor.locations" :key="location.id" :style="{left:`${location.x}%`,top:`${location.y}%`}" :class="{active:location.id===activeLocationId}" :aria-label="location.title" @click="activeLocationId=location.id"></button></div><article class="venue-card"><h3>{{activeLocation.title}}</h3><p>{{activeLocation.text}}</p><img :src="activeLocation.image" :alt="activeLocation.title"></article></div></section>
-  <div class="soft-area"><div class="about-decorations" aria-hidden="true"><img class="about-decoration decoration-01" :src="decoration01" alt=""><img class="about-decoration decoration-02" :src="decoration02" alt=""><img class="about-decoration decoration-03" :src="decoration03" alt=""><img class="about-decoration decoration-04" :src="decoration04" alt=""></div><section id="glass-notes" class="notes section-wrap"><div class="notes-top"><h2><img :src="headingIcon" alt="">玻璃筆記</h2><div class="arrows"><button :disabled="notePage===0" @click="notePage--">←</button><button :disabled="notePage===notePages.length-1" @click="notePage++">→</button></div></div><div class="note-grid"><RouterLink v-for="([title,date,text,image], index) in notePages[notePage]" :key="title" class="note-card" :to="{ name: 'invite-glass-detail', query: { id: notePage * 4 + index + 1 } }"><img :src="image" :alt="title"><div><time>{{date}}</time><h3>{{title}}</h3><p>{{text}}</p></div></RouterLink></div></section>
+  <div class="soft-area"><div class="about-decorations" aria-hidden="true"><img class="about-decoration decoration-01" :src="decoration01" alt=""><img class="about-decoration decoration-02" :src="decoration02" alt=""><img class="about-decoration decoration-03" :src="decoration03" alt=""><img class="about-decoration decoration-04" :src="decoration04" alt=""></div><section id="glass-notes" class="notes section-wrap"><div class="notes-top"><h2><img :src="headingIcon" alt="">玻璃筆記</h2><div class="arrows"><button :disabled="notePage===0" @click="notePage--">&#8592;&#65038;</button><button :disabled="notePage===notePages.length-1" @click="notePage++">&#8594;&#65038;</button></div></div><div class="note-grid"><RouterLink v-for="([title,date,text,image], index) in notePages[notePage]" :key="title" class="note-card" :to="{ name: 'invite-glass-detail', query: { id: notePage * 4 + index + 1 } }"><img :src="image" :alt="title"><div><time>{{date}}</time><h3>{{title}}</h3><p>{{text}}</p></div></RouterLink></div></section>
   <section class="sustainability section-wrap"><h2><img :src="headingIcon" alt="">永續專區</h2><p class="slogan">讓時間延續，讓未來永續。</p><div class="sdg-grid"><article v-for="([title,image]) in sustainabilityCards" :key="title"><img :src="image" :alt="title"><h3>{{title}}</h3></article></div><div class="sustainability-flow"><div class="steps"><button v-for="([num,title],index) in sustainabilitySteps" :key="num" :class="{active:index===sustainabilityIndex}" @click="sustainabilityIndex=index"><b>{{num}}</b><span>{{title}}</span></button></div><Transition name="sustainability-fade" mode="out-in"><img :key="sustainabilityIndex" :src="activeSustainability[2]" :alt="activeSustainability[1]"></Transition></div></section>
   <section class="courses section-wrap"><h2><img :src="headingIcon" alt="">永續課程</h2><div><article v-for="([title,text,image]) in courses" :key="title"><img :src="image" :alt="title"><h3>{{title}}</h3><p>{{text}}</p></article></div></section></div>
 </main></template>
@@ -545,4 +545,21 @@ const courses=[['循環再生玻璃吹製體驗','從回收、熔融、塑形到
 .sustainability-fade-leave-active { transition: opacity .35s ease, transform .35s ease; }
 .sustainability-fade-enter-from,
 .sustainability-fade-leave-to { opacity: 0; transform: translateY(16px); }
+
+/* 手機版：時間軸連接線覆蓋整段可橫滑動內容。 */
+@media (max-width: 1024px) {
+  .timeline { min-width: max-content; width: max-content; }
+  .timeline::before { right: auto; left: 0; width: 100%; }
+}
+
+/* 手機版的筆記翻頁放在所有文章之後，並固定為文字箭頭色彩。 */
+@media (max-width: 430px) {
+  .notes { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .notes-top { display: contents; }
+  .notes-top h2 { grid-column: 1; grid-row: 1; }
+  .note-grid { grid-column: 1; grid-row: 2; }
+  .notes-top .arrows { display: flex; grid-column: 1; grid-row: 3; justify-self: center; margin-top: 34px; }
+  .arrows button { appearance: none; color: #1e1e1e; font-family: Arial, sans-serif; }
+  .arrows button:disabled { color: #bdbdbd; opacity: 1; }
+}
 </style>
