@@ -153,7 +153,7 @@ const submitBooking = () => {
               target="_blank"
               rel="noopener noreferrer"
               class="route-button"
-              >{{ route[2] }} <span>↗</span></a
+              >{{ route[2] }} <span>&#8599;&#65038;</span></a
             >
           </div>
           <a
@@ -672,12 +672,29 @@ const submitBooking = () => {
   height: 440px;
 }
 @media (max-width: 768px) {
+  .hours-note {
+    width: auto;
+    margin: 18px 0 0;
+    text-align: left;
+  }
   .transport .transport-grid {
     grid-template-columns: 1fr;
     gap: 36px;
   }
   .transport .transport-panel {
     min-height: 370px;
+  }
+  .transport .tabs {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0;
+    flex-wrap: nowrap;
+  }
+  .transport .tabs button {
+    min-width: 0;
+    padding: 14px 0;
+    font-size: 1.1rem;
+    white-space: nowrap;
   }
   .transport .route-copy {
     min-height: 290px;

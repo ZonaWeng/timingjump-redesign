@@ -129,8 +129,8 @@ onBeforeUnmount(() => cancelAnimationFrame(fallingAnimationId))
             <button v-for="tab in tabs" :key="tab.value" :class="{ active: activeCategory === tab.value }" type="button" @click="selectCategory(tab.value)">{{ tab.label }}</button>
           </div>
           <div class="toolbar-arrows" aria-label="消息分頁">
-            <button type="button" :disabled="page === 1" aria-label="上一頁" @click="changePage(-1)">‹</button>
-            <button type="button" :disabled="page === pageCount" aria-label="下一頁" @click="changePage(1)">›</button>
+            <button type="button" :disabled="page === 1" aria-label="上一頁" @click="changePage(-1)">&#8249;&#65038;</button>
+            <button type="button" :disabled="page === pageCount" aria-label="下一頁" @click="changePage(1)">&#8250;&#65038;</button>
           </div>
         </div>
         <ul class="news-list">
@@ -158,4 +158,21 @@ onBeforeUnmount(() => cancelAnimationFrame(fallingAnimationId))
 .news-layout{z-index:1}.falling-stage{position:absolute;z-index:0;bottom:0;left:50%;width:min(calc(100% - 48px),1500px);height:315px;container-type:inline-size;pointer-events:none;transform:translateX(-50%)}.falling-object{position:absolute;bottom:0;width:auto;opacity:0;transform:translate3d(0,-120vh,0);transform-origin:center bottom;animation:fall-and-bounce 1.35s cubic-bezier(.25,.7,.25,1) forwards}.object-1{left:0;height:clamp(185px,36.667cqw,400px);z-index:1;animation-delay:.05s}.object-2{left:10%;height:clamp(130px,13.333cqw,200px);z-index:4;animation-delay:.2s}.object-3{right:35%;height:clamp(110px,50cqw,600px);z-index:1;animation-delay:.35s}.object-4{right:20%;height:clamp(170px,22cqw,330px);z-index:2;animation-delay:.5s}.object-5{right:-7%;height:clamp(145px,46.667cqw,500px);z-index:2;animation-delay:.65s}@keyframes fall-and-bounce{0%{opacity:0;transform:translate3d(0,-120vh,0) rotate(-6deg)}12%{opacity:1}68%{opacity:1;transform:translate3d(0,0,0) rotate(2deg)}81%{transform:translate3d(0,-34px,0) rotate(-1deg)}92%{transform:translate3d(0,0,0) rotate(0)}100%{opacity:1;transform:translate3d(0,0,0)}}@media(max-width:768px){.falling-stage{width:100%;height:210px}.object-1{height:210px}.object-2{height:105px}.object-3{height:280px}.object-4{height:165px}.object-5{height:220px}}
 .falling-object{animation:none!important}
 .falling-stage{bottom:-20px}:global(body:has(.news-page) .site-footer){border-top-width:0}
+
+@media (max-width: 768px) {
+  .news-content { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .news-toolbar { display: contents; }
+  .category-tabs { grid-column: 1; grid-row: 1; margin-bottom: 28px; }
+  .news-list { grid-column: 1; grid-row: 2; }
+  .toolbar-arrows { grid-column: 1; grid-row: 3; justify-self: center; margin-top: 34px; }
+  .toolbar-arrows button { color: #1e1e1e; font-family: Arial, sans-serif; }
+  .toolbar-arrows button:disabled { color: #c7c3bf; }
+
+  .falling-stage { bottom: -8px; height: 110px; }
+  .object-1 { left: 3%; height: 74px; }
+  .object-2 { left: 27%; height: 42px; }
+  .object-3 { right: 39%; height: 90px; }
+  .object-4 { right: 20%; height: 48px; }
+  .object-5 { right: 3%; height: 72px; }
+}
 </style>

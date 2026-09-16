@@ -103,4 +103,24 @@ const activities = [
 
 .activity-list { background: #fff; }
 .list-heading h2 { font-size: clamp(1.3rem, 2vw, 2rem); }
+
+/* 手機版沿用桌機的標題色彩，並讓兩組活動拼貼保留清楚的閱讀空間。 */
+@media (max-width: 640px) {
+  .blowing { min-height: 780px; }
+  .blowing-layout { height: 780px; }
+  .blowing .english-title { top: 365px; left: 0; color: #7fc7d0; font-size: 4rem; }
+  .photo-one { top: 154px; width: 48%; height: 205px; }
+  .photo-two { top: 70px; width: 46%; height: 205px; }
+  .photo-three { right: 0; bottom: 205px; width: 54%; height: 190px; }
+  .blowing-intro { bottom: 54px; }
+
+  .painting { min-height: 750px; }
+  .painting-layout { height: 750px; }
+  .paint-one { top: 74px; width: 56%; height: 224px; }
+  .paint-two { top: 405px; right: 0; bottom: auto; width: 47%; height: 185px; }
+  .painting .english-title { top: 305px; left: 0; color: #dfca65; font-size: 3.75rem; }
+  .painting-intro { bottom: 48px; }
+  .painting-bg { right: 9%; bottom: 4%; width: 36%; }
+  .painting-blue-bg { right: -18%; bottom: -3%; width: 64%; }
+}
 </style>

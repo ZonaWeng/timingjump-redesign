@@ -383,7 +383,7 @@ const courses=[['循環再生玻璃吹製體驗','從回收、熔融、塑形到
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    touch-action: pan-x;
+    touch-action: auto;
   }
   .timeline-window::-webkit-scrollbar { display: none; }
   .timeline { transform: none !important; }
@@ -549,7 +549,7 @@ const courses=[['循環再生玻璃吹製體驗','從回收、熔融、塑形到
 /* 手機版：時間軸連接線覆蓋整段可橫滑動內容。 */
 @media (max-width: 1024px) {
   .timeline { min-width: max-content; width: max-content; }
-  .timeline::before { right: auto; left: 0; width: 100%; }
+  .timeline::before { right: auto; left: 0; width: 4400px; }
 }
 
 /* 手機版的筆記翻頁放在所有文章之後，並固定為文字箭頭色彩。 */
