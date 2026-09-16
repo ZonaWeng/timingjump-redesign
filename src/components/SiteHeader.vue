@@ -239,6 +239,8 @@ z-index: 100;
     z-index: 1000;
     margin: 0 auto !important;
   }
+
+  .brand img { height: 38px; }
 }
 
 :global(body:has(.shop-home-page, .shop-products-page, .shop-faq-page, .shop-contact-page) .switch-button) {
@@ -367,12 +369,13 @@ z-index: 100;
   .mobile-shop-actions {
     display: flex;
     align-items: center;
-    align-self: flex-end;
+    align-self: stretch;
     gap: 12px;
-    margin: 16px 0 0 auto;
+    width: 100%;
+    margin-top: 16px;
   }
-  .mobile-shop-actions .cart-link--mobile { display: inline-flex; }
-  .mobile-shop-actions .switch-button--mobile { margin: 0; }
+  .mobile-shop-actions .cart-link--mobile { display: inline-flex; padding: 14px 16px; }
+  .mobile-shop-actions .switch-button--mobile { margin: 0 0 0 auto; }
 }
 
 @media (max-width: 520px) {
