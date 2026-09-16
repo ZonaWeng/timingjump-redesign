@@ -1,7 +1,9 @@
 <script setup>
-import { ref } from "vue"
+import { computed, ref } from "vue"
+import { useRoute } from "vue-router"
 import brandLogo from "../assets/images/logo_黑.png"
-import loginIcon from "../assets/images/icon/login.png"
+import loginIcon from "../assets/images/icon/login-user.png"
+import cartIcon from "../assets/images/icon/shopping-cart.png"
 
 defineProps({
   brand: {
@@ -23,6 +25,8 @@ defineProps({
 })
 
 const isMenuOpen = ref(false)
+const route = useRoute()
+const isShop = computed(() => route.path.startsWith("/shop"))
 
 function closeMenu() {
   isMenuOpen.value = false
@@ -50,16 +54,15 @@ function closeMenu() {
         {{ item.label }}
       </RouterLink>
 
-      <RouterLink
-        class="switch-button switch-button--mobile"
-        :to="switchAction.to"
-        @click="closeMenu"
-      >
-        {{ switchAction.label }} →
-      </RouterLink>
+      <div v-if="isShop" class="mobile-shop-actions">
+        <RouterLink class="cart-link cart-link--mobile" to="/shop/products" @click="closeMenu"><img :src="cartIcon" alt="">購物車</RouterLink>
+        <RouterLink class="switch-button switch-button--mobile" :to="switchAction.to" @click="closeMenu">{{ switchAction.label }} →</RouterLink>
+      </div>
+      <RouterLink v-else class="switch-button switch-button--mobile" :to="switchAction.to" @click="closeMenu">{{ switchAction.label }} →</RouterLink>
     </nav>
 
     <div class="header-actions">
+      <RouterLink v-if="isShop" class="cart-link cart-link--desktop" to="/shop/products"><img :src="cartIcon" alt="">購物車</RouterLink>
       <button class="login-button" type="button" aria-label="登入">
   <img :src="loginIcon" alt="">
   <span>登入</span>
@@ -157,6 +160,12 @@ z-index: 100;
   font-weight: 700;
   white-space: nowrap;
   cursor: pointer;
+  border-radius: 999px;
+  transition: color 160ms ease;
+}
+
+.login-button:hover {
+  color: #4e858b;
 }
 
 .login-button img {
@@ -187,6 +196,49 @@ z-index: 100;
 .switch-button:hover {
   background: #d8b81b;
   transform: translateX(3px);
+}
+
+.cart-link {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 8px;
+  color: #1e1e1e;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.cart-link img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.cart-link:hover { color: #4e858b; }
+.cart-link--mobile { display: none; }
+
+/* 桌機所有頁面共用置頂導覽；各頁的局部定位規則不得覆蓋它。 */
+@media (min-width: 641px) {
+  .site-header {
+    position: fixed !important;
+    top: 14px !important;
+    right: 0 !important;
+    left: 0 !important;
+    z-index: 1000;
+    margin: 0 auto !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .site-header {
+    position: fixed !important;
+    top: 8px !important;
+    right: 0 !important;
+    left: 0 !important;
+    z-index: 1000;
+    margin: 0 auto !important;
+  }
 }
 
 :global(body:has(.shop-home-page, .shop-products-page, .shop-faq-page, .shop-contact-page) .switch-button) {
@@ -310,6 +362,17 @@ z-index: 100;
   min-width: 160px;
   margin: 16px 0 0 auto;
 }
+
+  .cart-link--desktop { display: none; }
+  .mobile-shop-actions {
+    display: flex;
+    align-items: center;
+    align-self: flex-end;
+    gap: 12px;
+    margin: 16px 0 0 auto;
+  }
+  .mobile-shop-actions .cart-link--mobile { display: inline-flex; }
+  .mobile-shop-actions .switch-button--mobile { margin: 0; }
 }
 
 @media (max-width: 520px) {

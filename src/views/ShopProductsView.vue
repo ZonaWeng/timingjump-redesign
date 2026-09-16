@@ -122,8 +122,8 @@ function addToCart(product, count = 1) { toast.value = `${product.name} × ${cou
   .category-main span { color: #1e1e1e !important; }
   .subcategory-list { display: flex !important; margin-top: 8px; }
   .subcategory-list button { color: #555; font-size: .82rem !important; }
-  .search-box input { box-sizing: border-box; padding-right: 82px; font-size: 16px; }
-  .search-box i { right: 22px; }
+  .search-box input { box-sizing: border-box; padding-right: 64px; font-size: 14px; letter-spacing: 0; }
+  .search-box i { right: 20px; width: 22px; height: 22px; }
 }
 
 @media (max-width: 800px) {
