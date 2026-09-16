@@ -57,7 +57,7 @@ defineProps({
 </a>
 </div>
 
-          <RouterLink class="footer-logo" to="/">
+          <RouterLink class="footer-logo" to="/?entry=1">
   <img :src="brandLogo" :alt="brand">
 </RouterLink>
         </div>

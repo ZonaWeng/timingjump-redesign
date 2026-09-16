@@ -90,4 +90,22 @@ const router = createRouter({
     ],
 })
 
+// Some mobile in-app browsers reopen a freshly deployed site at `/` instead of
+// preserving its current URL. Keep the visitor on the last internal page for
+// the duration of that browser session; `/?entry=1` remains an explicit way to
+// visit the entrance page.
+const lastRouteKey = "timingjump:last-internal-route"
+
+router.beforeEach((to) => {
+    if (to.path === "/" && to.query.entry !== "1") {
+        const lastRoute = window.sessionStorage.getItem(lastRouteKey)
+        if (lastRoute && lastRoute !== "/") return lastRoute
+    }
+    return true
+})
+
+router.afterEach((to) => {
+    if (to.path !== "/") window.sessionStorage.setItem(lastRouteKey, to.fullPath)
+})
+
 export default router
