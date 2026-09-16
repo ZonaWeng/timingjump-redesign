@@ -308,6 +308,7 @@ z-index: 100;
     background: transparent;
     font-size: 0;
     cursor: pointer;
+    transform: translateY(-4px);
   }
 
   .menu-toggle::before {
