@@ -159,6 +159,10 @@ onBeforeUnmount(() => cancelAnimationFrame(fallingAnimationId))
 .falling-object{animation:none!important}
 .falling-stage{bottom:-20px}:global(body:has(.news-page) .site-footer){border-top-width:0}
 
+@media (min-width: 769px) {
+  .news-page { padding-top: 145px; }
+}
+
 @media (max-width: 768px) {
   .news-content { display: grid; grid-template-columns: minmax(0, 1fr); }
   .news-toolbar { display: contents; }

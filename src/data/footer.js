@@ -9,9 +9,9 @@ export const footerLinkGroups = [
     { label: "購物須知", to: "/shop/faq" },
     { label: "購物說明", to: "/shop/faq" },
     { label: "購物諮詢", to: "/shop/contact" },
-    { label: "會員服務條款", to: "/shop/contact" },
+    { label: "會員服務條款", to: "/member-terms" },
   ],
   [
-    { label: "隱私權政策／著作權聲明", to: "/shop/contact" },
+    { label: "隱私權政策／著作權聲明", to: "/privacy-policy" },
   ],
 ]

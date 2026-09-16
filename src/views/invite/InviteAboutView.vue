@@ -564,6 +564,10 @@ const courses=[['循環再生玻璃吹製體驗','從回收、熔融、塑形到
   .note-grid { grid-column: 1; grid-row: 2; }
   .notes-top .arrows { display: flex; grid-column: 1; grid-row: 3; justify-self: center; margin-top: 34px; }
   .arrows button { appearance: none; color: #1e1e1e; font-family: Arial, sans-serif; }
-  .arrows button:disabled { color: #bdbdbd; opacity: 1; }
+.arrows button:disabled { color: #bdbdbd; opacity: 1; }
+}
+
+@media (min-width: 769px) {
+  .about-page { padding-top: 120px; }
 }
 </style>

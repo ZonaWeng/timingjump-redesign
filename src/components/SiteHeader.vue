@@ -63,10 +63,10 @@ function closeMenu() {
 
     <div class="header-actions">
       <RouterLink v-if="isShop" class="cart-link cart-link--desktop" to="/shop/products"><img :src="cartIcon" alt="">購物車</RouterLink>
-      <button class="login-button" type="button" aria-label="登入">
+      <RouterLink class="login-button" to="/member-terms" aria-label="登入">
   <img :src="loginIcon" alt="">
   <span>登入</span>
-</button>
+</RouterLink>
 
       <RouterLink
         class="switch-button switch-button--desktop"

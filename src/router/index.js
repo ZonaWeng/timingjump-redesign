@@ -10,9 +10,12 @@ import InviteAboutView from "../views/invite/InviteAboutView.vue"
 import InviteGlassDetailView from "../views/invite/InviteGlassDetailView.vue"
 import InviteVenueView from "../views/invite/InviteVenueView.vue"
 import InviteNewsView from "../views/invite/InviteNewsView.vue"
+import InviteNewsDetailView from "../views/invite/InviteNewsDetailView.vue"
 import InviteActivityView from "../views/invite/InviteActivityView.vue"
 import InviteQuestionView from "../views/invite/InviteQuestionView.vue"
 import InviteContactView from "../views/invite/InviteContactView.vue"
+import MemberTermsView from "../views/MemberTermsView.vue"
+import PrivacyPolicyView from "../views/PrivacyPolicyView.vue"
 
 const router = createRouter({
     history: createWebHistory(),
@@ -73,6 +76,11 @@ const router = createRouter({
             component: InviteNewsView,
         },
         {
+            path: "/invite/news-detail",
+            name: "invite-news-detail",
+            component: InviteNewsDetailView,
+        },
+        {
             path: "/invite/activity",
             name: "invite-activity",
             component: InviteActivityView,
@@ -86,6 +94,16 @@ const router = createRouter({
             path: "/invite/contact",
             name: "invite-contact",
             component: InviteContactView,
+        },
+        {
+            path: "/member-terms",
+            name: "member-terms",
+            component: MemberTermsView,
+        },
+        {
+            path: "/privacy-policy",
+            name: "privacy-policy",
+            component: PrivacyPolicyView,
         },
     ],
 })

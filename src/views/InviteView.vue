@@ -716,4 +716,7 @@ onBeforeUnmount(() => {
   .news-text { max-width: 100%; text-align: center; white-space: normal; }
   .news-badge { display: inline-flex; }
 }
+@media (min-width: 769px) {
+  .invite-home { margin-top: 0; padding-top: 120px; background: #a6dbe0; }
+}
 </style>
