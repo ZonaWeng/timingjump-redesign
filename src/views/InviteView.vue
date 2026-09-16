@@ -717,6 +717,14 @@ onBeforeUnmount(() => {
   .news-badge { display: inline-flex; }
 }
 @media (min-width: 769px) {
-  .invite-home { margin-top: 0; padding-top: 120px; background: #a6dbe0; }
+  /* Let the hero continue behind the fixed navigation.  Adding space to the
+     page created a separate flat-colour strip above the textured artwork. */
+  .invite-home { margin-top: -110px; padding-top: 0; }
+
+  /* The landing view should open on the banner only; news follows after the
+     first viewport instead of peeking into the initial screen. */
+  /* Compensate for the full-bleed negative offset above so no part of the
+     following news section appears in the initial viewport. */
+  .hero { height: calc(100vh + 180px); }
 }
 </style>
