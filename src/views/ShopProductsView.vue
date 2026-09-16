@@ -116,4 +116,33 @@ function addToCart(product, count = 1) { toast.value = `${product.name} × ${cou
 .pagination button.active,.pagination .arrow{border-color:#1e1e1e!important;background:#1e1e1e!important;color:#fff!important}.pagination button:hover:not(:disabled){border-color:#ddc657!important;background:#ddc657!important;color:#fff!important}.pagination .arrow:disabled{border-color:#bdbdbd!important;background:#bdbdbd!important;color:#fff!important;opacity:1;pointer-events:none;cursor:not-allowed}
 @media(hover:hover) and (pointer:fine){.products-hero,.product-image{cursor:none}.hero-dots,.hero-dots button{cursor:pointer}}
 .glass-cursor{width:112px;height:100px;border-radius:42% 58% 47% 53% / 38% 48% 52% 62%;font-size:17px;font-weight:600}.category-main:hover span,.category-main.active span{color:#1e1e1e}.category-main:hover img,.category-main.active img{filter:saturate(1.1)}.subcategory-list button:hover,.subcategory-list button.active{color:#ddc657!important;border-color:currentColor!important}.product-card>.product-meta>div{justify-content:space-between}.product-card>.product-meta>div>button{margin-left:auto;font-size:25px;font-weight:900;line-height:1}
+
+/* 商品頁手機版：保留原網站完整分類，並避免搜尋欄與詳情彈窗橫向溢位。 */
+@media (max-width: 640px) {
+  .category-main span { color: #1e1e1e !important; }
+  .subcategory-list { display: flex !important; margin-top: 8px; }
+  .subcategory-list button { color: #555; font-size: .82rem !important; }
+  .search-box input { box-sizing: border-box; padding-right: 82px; font-size: 16px; }
+  .search-box i { right: 22px; }
+}
+
+@media (max-width: 800px) {
+  .modal-backdrop { display: grid; padding: 12px; place-items: center; }
+  .product-modal { display: block; width: 100%; max-width: 100%; height: auto; max-height: calc(100dvh - 24px); overflow-x: hidden; overflow-y: auto; border-radius: 24px; }
+  .modal-close { position: absolute; top: 14px; right: 14px; z-index: 4; width: 42px; height: 42px; margin: 0; font-size: 24px; }
+  .modal-gallery { display: block; padding: 22px 18px 18px; }
+  .modal-image { min-height: 0; height: auto; aspect-ratio: 1; }
+  .gallery-arrow { width: 40px; height: 40px; font-size: 28px; }
+  .thumbnails { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-top: 10px; }
+  .thumbnails button { width: auto; }
+  .modal-copy { padding: 26px 22px 32px; overflow: visible; }
+  .modal-copy h2 { margin-right: 40px; font-size: 1.7rem; }
+  .modal-code { margin-bottom: 20px; }
+  .modal-copy h3 { margin-top: 24px; font-size: 1.2rem; }
+  .modal-copy ul { font-size: 1rem; line-height: 1.65; }
+  .modal-copy footer { flex-wrap: wrap; margin-top: 26px; padding-top: 18px; }
+  .modal-copy footer strong { margin-right: auto; font-size: 1.6rem; }
+  .quantity { margin-left: 0; }
+  .cart-button { width: 100%; }
+}
 </style>
