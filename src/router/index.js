@@ -6,6 +6,7 @@ import ShopView from "../views/ShopView.vue"
 import ShopProductsView from "../views/ShopProductsView.vue"
 import ShopFaqView from "../views/ShopFaqView.vue"
 import ShopContactView from "../views/ShopContactView.vue"
+import ShopCartView from "../views/ShopCartView.vue"
 import InviteAboutView from "../views/invite/InviteAboutView.vue"
 import InviteGlassDetailView from "../views/invite/InviteGlassDetailView.vue"
 import InviteVenueView from "../views/invite/InviteVenueView.vue"
@@ -15,6 +16,7 @@ import InviteActivityView from "../views/invite/InviteActivityView.vue"
 import InviteQuestionView from "../views/invite/InviteQuestionView.vue"
 import InviteContactView from "../views/invite/InviteContactView.vue"
 import MemberTermsView from "../views/MemberTermsView.vue"
+import LoginView from "../views/LoginView.vue"
 import PrivacyPolicyView from "../views/PrivacyPolicyView.vue"
 
 const router = createRouter({
@@ -49,6 +51,11 @@ const router = createRouter({
             path: "/shop/faq",
             name: "shop-faq",
             component: ShopFaqView,
+        },
+        {
+            path: "/shop/cart",
+            name: "shop-cart",
+            component: ShopCartView,
         },
         {
             path: "/shop/contact",
@@ -94,6 +101,11 @@ const router = createRouter({
             path: "/invite/contact",
             name: "invite-contact",
             component: InviteContactView,
+        },
+        {
+            path: "/login",
+            name: "login",
+            component: LoginView,
         },
         {
             path: "/member-terms",

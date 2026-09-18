@@ -10,6 +10,7 @@ import product05 from "../assets/images/shop/icon/product05.png"
 import bannerOne from "../assets/images/shop/homepage/discount01.png"
 import bannerTwo from "../assets/images/shop/homepage/discount02.png"
 import bannerThree from "../assets/images/shop/homepage/discount03.png"
+import { addToCart as addItemToCart } from "../stores/cart.js"
 
 const galleryAssets = import.meta.glob("../assets/images/shop/all-products/*", { eager: true, import: "default" })
 const asset = (file) => Object.entries(galleryAssets).find(([path]) => path.endsWith(`/${file}`))?.[1]
@@ -62,7 +63,7 @@ function openProduct(product) { selectedProduct.value = product; activeImage.val
 function closeProduct() { selectedProduct.value = null }
 function changeImage(direction) { const length = selectedProduct.value.gallery.length; activeImage.value = (activeImage.value + direction + length) % length }
 function moveCursor(event) { cursor.value = { x: event.clientX, y: event.clientY, visible: true } }
-function addToCart(product, count = 1) { toast.value = `${product.name} × ${count} 已加入購物車`; window.clearTimeout(toastTimer); toastTimer = window.setTimeout(() => { toast.value = "" }, 2200) }
+function addToCart(product, count = 1) { addItemToCart(product, count); toast.value = `${product.name} × ${count} 已加入購物車`; window.clearTimeout(toastTimer); toastTimer = window.setTimeout(() => { toast.value = "" }, 2200) }
 </script>
 
 <template>

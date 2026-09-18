@@ -4,6 +4,7 @@ import { useRoute } from "vue-router"
 import brandLogo from "../assets/images/logo_黑.png"
 import loginIcon from "../assets/images/icon/login-user.png"
 import cartIcon from "../assets/images/icon/shopping-cart.png"
+import { cartCount } from "../stores/cart.js"
 
 defineProps({
   brand: {
@@ -55,15 +56,15 @@ function closeMenu() {
       </RouterLink>
 
       <div v-if="isShop" class="mobile-shop-actions">
-        <RouterLink class="cart-link cart-link--mobile" to="/shop/products" @click="closeMenu"><img :src="cartIcon" alt="">購物車</RouterLink>
+        <RouterLink class="cart-link cart-link--mobile" to="/shop/cart" @click="closeMenu"><img :src="cartIcon" alt="">購物車 <b v-if="cartCount">{{ cartCount }}</b></RouterLink>
         <RouterLink class="switch-button switch-button--mobile" :to="switchAction.to" @click="closeMenu">{{ switchAction.label }} →</RouterLink>
       </div>
       <RouterLink v-else class="switch-button switch-button--mobile" :to="switchAction.to" @click="closeMenu">{{ switchAction.label }} →</RouterLink>
     </nav>
 
     <div class="header-actions">
-      <RouterLink v-if="isShop" class="cart-link cart-link--desktop" to="/shop/products"><img :src="cartIcon" alt="">購物車</RouterLink>
-      <RouterLink class="login-button" to="/member-terms" aria-label="登入">
+      <RouterLink v-if="isShop" class="cart-link cart-link--desktop" to="/shop/cart"><img :src="cartIcon" alt="">購物車 <b v-if="cartCount">{{ cartCount }}</b></RouterLink>
+      <RouterLink class="login-button" to="/login" aria-label="登入">
   <img :src="loginIcon" alt="">
   <span>登入</span>
 </RouterLink>
@@ -216,6 +217,7 @@ z-index: 100;
 }
 
 .cart-link:hover { color: #4e858b; }
+.cart-link b { display: grid; min-width: 19px; height: 19px; padding: 0 5px; place-items: center; border-radius: 999px; color: #fff; background: #d5ae27; font-size: 12px; }
 .cart-link--mobile { display: none; }
 
 /* 桌機所有頁面共用置頂導覽；各頁的局部定位規則不得覆蓋它。 */
@@ -243,11 +245,11 @@ z-index: 100;
   .brand img { height: 38px; }
 }
 
-:global(body:has(.shop-home-page, .shop-products-page, .shop-faq-page, .shop-contact-page) .switch-button) {
+:global(body:has(.shop-home-page, .shop-products-page, .shop-faq-page, .shop-contact-page, .cart-page) .switch-button) {
   background: #62b6c2;
 }
 
-:global(body:has(.shop-home-page, .shop-products-page, .shop-faq-page, .shop-contact-page) .switch-button:hover) {
+:global(body:has(.shop-home-page, .shop-products-page, .shop-faq-page, .shop-contact-page, .cart-page) .switch-button:hover) {
   background: #4b9faa;
 }
 
@@ -353,8 +355,8 @@ z-index: 100;
     background: #dff1f3;
   }
 
-  :global(body:has(.shop-home-page, .shop-products-page, .shop-faq-page, .shop-contact-page) .main-nav a:hover),
-  :global(body:has(.shop-home-page, .shop-products-page, .shop-faq-page, .shop-contact-page) .main-nav a.router-link-active) {
+  :global(body:has(.shop-home-page, .shop-products-page, .shop-faq-page, .shop-contact-page, .cart-page) .main-nav a:hover),
+  :global(body:has(.shop-home-page, .shop-products-page, .shop-faq-page, .shop-contact-page, .cart-page) .main-nav a.router-link-active) {
     color: #BFA62E;
     background: #f8f5e1;
   }
