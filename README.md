@@ -1,5 +1,41 @@
-# Vue 3 + Vite
+# 臺灣玻璃館網站優化
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+以 Vue 3 + Vite 製作的網站改版專案，重新規劃臺灣玻璃館的資訊架構、視覺介面與使用流程。
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+本專案為前端職業訓練期間完成的團隊專題，針對臺灣玻璃館網站進行介面、資訊架構與使用流程優化。
+
+## Demo
+
+[查看線上網站](https://timingjump-redesign.vercel.app/)
+
+## 使用技術
+
+- Vue 3
+- Vite
+- HTML
+- CSS
+- JavaScript
+- RWD
+- Git / GitHub
+- Figma
+
+## 專案特色
+
+- 重新規劃網站資訊架構
+- 區分參觀與購物內容
+- 製作 RWD 響應式版面
+- 加入互動效果與頁面導覽
+- 優化手機版操作體驗
+
+## 我的負責內容
+
+- 首頁入口頁面設計與開發
+- Vue 頁面與互動功能製作
+- RWD 響應式調整
+- Navbar / Footer 製作
+- 使用者流程與介面優化
+- Figma 畫面規劃
+
+## 專案類型
+
+前端職業訓練團隊專題
